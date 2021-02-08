@@ -1,13 +1,11 @@
 import styled from 'styled-components';
 
-export const CyberBoxContainer = styled.a.attrs({
-  target: 'blank',
-})`
+export const ContainerButton = styled.a`
   --border: 4px;
-  --color: hsl(0, 0%, 100%);
+  --color: #ffffff;
   --shadow-primary-hue: 180;
   --shadow-primary: rgba(13, 242, 242, 90%);
-  --primary: hsl(0, 85%, calc(50 * 1%));
+  --primary: hsl(0, 85%, calc(53 * 1%));
   --shadow-secondary: rgba(245, 245, 61, 80%);
   --clip: polygon(0 0, 100% 0, 100% 100%, 8% 100%, 0 70%);
   --shimmy-distance: 3;
@@ -130,7 +128,7 @@ export const CyberBoxContainer = styled.a.attrs({
   }
 `;
 
-export const Glitch = styled.span`
+export const RepeatedContainerGlitch = styled.span`
   display: flex;
   flex-direction: center;
   align-items: center;
