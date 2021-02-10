@@ -16,13 +16,10 @@ export default createGlobalStyle`
 
   html, body, #root {
 		min-height: 100% auto;
-    width: 100vw;
-    height: 100vh;
   }
   
   body {
-    background-size: auto;
-    background: no-repeat linear-gradient(50deg, #1d1d1d 40%, #111111 60%), #fff700;
+    background: #1d1d1d;
     color: azure;
     font-family: 'Cyber', sans-serif;
     -webkit-font-smoothing: antialiased !important;

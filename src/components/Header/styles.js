@@ -11,6 +11,7 @@ export const Container = styled.div`
 
 export const Pseudocode = styled.code`
   font-family: source-code-pro, 'Courier New', monospace;
+  font-size: 14px;
   color: rgba(255, 255, 255, 0.418);
   code {
     display: block;
@@ -24,9 +25,10 @@ export const TextContent = styled.div`
     padding: 20px 0;
     font-size: 60px;
     font-weight: 800;
-    line-height: 45px;
+    line-height: 55px;
   }
   code {
     color: rgba(192, 192, 192, 0.85);
+    font-size: 14px;
   }
 `;
