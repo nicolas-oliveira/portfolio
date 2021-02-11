@@ -18,13 +18,13 @@ export const Container = styled.div`
     0.01% 99.99%
   );
 
-  --color-title-background: #3d2020;
-  --color-title-border: #f13232;
+  --color-title-background: #551c1c;
+  --color-title-border: #f51919;
   --filter-title-neon: drop-shadow(1px 1px 7px var(--color-title-border));
 
   --color-cover-background: #271e1e;
-  --color-cover-border: rgba(31, 7, 7, 0.158);
-  --filter-cover-neon: drop-shadow(2px 2px 4px rgba(255, 0, 0, 0.233));
+  --color-cover-border: rgba(73, 9, 9, 0.158);
+  --filter-cover-neon: drop-shadow(2px 2px 4px rgba(255, 0, 0, 0.378));
 
   position: relative;
   padding: 1em;
@@ -44,7 +44,22 @@ export const Container = styled.div`
     left: -150px;
     opacity: 0.5;
   }
-  @media (max-width: 1000px) {
+
+  @media (max-width: 728px) {
+    &:first-child {
+      right: -120px;
+    }
+    &:last-child {
+      left: -120px;
+    }
+  }
+  @media (max-width: 425px) {
+    &:first-child {
+      right: -90px;
+    }
+    &:last-child {
+      left: -90px;
+    }
   }
 `;
 
