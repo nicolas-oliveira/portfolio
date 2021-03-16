@@ -20,7 +20,7 @@ export default createGlobalStyle`
   
   body {
     background: #1d1d1d;
-    color: azure;
+    color: #eee;
     font-family: 'Cyber', sans-serif;
     -webkit-font-smoothing: antialiased !important;
     -moz-osx-font-smoothing: grayscale;

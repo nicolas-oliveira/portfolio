@@ -1,29 +1,31 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Container, Title, Cover } from './styles';
 import { string, bool } from 'prop-types';
 
 RepoCard.propTypes = {
-  name: string,
+  nameOfRepository: string,
   description: string,
-  cover: bool,
+  openGraphImageUrl: string,
 };
 
-function RepoCard({ name, description, cover }) {
+export default function RepoCard({
+  nameOfRepository,
+  openGraphImageUrl,
+  description,
+}) {
   return (
     <Container>
       <Title>
         <div className="submask">
-          <h1>{name}</h1>
+          <h1>{nameOfRepository}</h1>
         </div>
       </Title>
       <Cover>
         <div className="submask">
-          {cover ? <span>Cover</span> : null}
+          {openGraphImageUrl ? <img src={openGraphImageUrl}></img> : null}
           <p>{description}</p>
         </div>
       </Cover>
     </Container>
   );
 }
-
-export default RepoCard;

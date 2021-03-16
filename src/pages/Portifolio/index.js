@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 
+import graphql from '../../services/graphql';
 import api from '../../services/api';
+import { gql } from '@apollo/client';
+
 import {
   PortifolioContainer,
   GroupCards,
@@ -38,25 +41,66 @@ export default class Portifolio extends Component {
       this.setState({ repositories: JSON.parse(repositories) });
     }
 
-    const { data } = await api.get(
-      '/users/nicolas-oliveira/repos?sort=created'
-    );
+    // const { data } = await api.get(
+    //   '/users/nicolas-oliveira/repos?sort=created'
+    // );
 
-    const dataRepository = data.map(({ name, description }) => {
-      return { name, description };
-    });
+    await graphql
+      .query({
+        query: gql`
+          {
+            viewer {
+              login
+              repositories(
+                first: 100
+                isFork: false
+                orderBy: { field: CREATED_AT, direction: DESC }
+              ) {
+                edges {
+                  node {
+                    id
+                    name
+                    description
+                    openGraphImageUrl
+                  }
+                }
+              }
+            }
+          }
+        `,
+      })
+      .then((result) => {
+        const dataRepositories = result.data.viewer.repositories.edges;
 
-    const { requestIndex } = this.state;
+        this.setState({
+          repositories: dataRepositories.map(({ node }) => {
+            const { id, name, description, openGraphImageUrl } = node;
 
-    this.setState({
-      repositories: dataRepository,
-      requestIndex: 0,
-    });
+            return {
+              id,
+              nameOfRepository: name,
+              description,
+              openGraphImageUrl,
+            };
+          }),
+          requestIndex: 0,
+        });
+      });
+
+    // const dataRepository = data.map(({ name, description }) => {
+    //   return { nameOfRepository: name, description };
+    // });
+  }
+
+  componentDidUpdate(e, prevState) {
+    const { repositories } = this.state;
+
+    if (prevState.repositories !== repositories) {
+      localStorage.setItem('repositories', JSON.stringify(repositories));
+    }
   }
 
   render() {
-    const { repositories, requestIndex } = this.state;
-
     const previous = this.state.repositories[this.state.requestIndex - 1];
     const actual = this.state.repositories[this.state.requestIndex];
     const next = this.state.repositories[this.state.requestIndex + 1];
@@ -94,10 +138,10 @@ export default class Portifolio extends Component {
             }
             return (
               <RepoCard
-                key={index}
-                name={repository.name}
+                key={repository.id}
+                nameOfRepository={repository.nameOfRepository}
                 description={repository.description}
-                cover={true}
+                openGraphImageUrl={repository.openGraphImageUrl}
               />
             );
           })}

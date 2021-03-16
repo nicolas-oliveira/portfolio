@@ -77,16 +77,17 @@ export const Cover = styled.div`
     clip-path: var(--clip-right-bottom-smaller);
     background: var(--color-cover-background);
 
-    span {
+    img {
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 12em;
+      width: 100%;
+      padding: 5em 0;
       filter: var(--filter-cover-neon);
     }
 
     p {
-      botttom: 0;
+      bottom: 0;
       filter: var(--filter-cover-neon);
     }
   }
