@@ -32,13 +32,15 @@ export const Container = styled.div`
 
   &:nth-child(2) {
     z-index: 1;
-    opacity: 0.95;
+    opacity: 0.99;
   }
+
   &:first-child {
     bottom: -7em;
     right: -150px;
     opacity: 0.5;
   }
+
   &:last-child {
     bottom: -7em;
     left: -150px;
@@ -49,6 +51,7 @@ export const Container = styled.div`
     &:first-child {
       right: -120px;
     }
+
     &:last-child {
       left: -120px;
     }
@@ -57,6 +60,7 @@ export const Container = styled.div`
     &:first-child {
       right: -90px;
     }
+
     &:last-child {
       left: -90px;
     }
@@ -83,7 +87,6 @@ export const Cover = styled.div`
       justify-content: center;
       width: 100%;
       padding: 5em 0;
-      filter: var(--filter-cover-neon);
     }
 
     p {
@@ -115,4 +118,5 @@ export const Title = styled.div`
       text-transform: uppercase;
       font-size: 1.5em;
     }
+  }
 `;
