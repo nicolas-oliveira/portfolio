@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 import graphql from '../../services/graphql';
-import api from '../../services/api';
 import { gql } from '@apollo/client';
 
 import {
@@ -40,10 +39,6 @@ export default class Portifolio extends Component {
     if (repositories) {
       this.setState({ repositories: JSON.parse(repositories) });
     }
-
-    // const { data } = await api.get(
-    //   '/users/nicolas-oliveira/repos?sort=created'
-    // );
 
     await graphql
       .query({
@@ -86,10 +81,6 @@ export default class Portifolio extends Component {
           requestIndex: 0,
         });
       });
-
-    // const dataRepository = data.map(({ name, description }) => {
-    //   return { nameOfRepository: name, description };
-    // });
   }
 
   componentDidUpdate(e, prevState) {
