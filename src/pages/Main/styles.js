@@ -12,15 +12,18 @@ export const RelativeChildrenStyle = styled.div`
   align-items: center;
   justify-content: space-evenly;
   grid-template-columns: 3fr 1fr;
-  min-width: 1000px;
+  min-width: 1024px;
   height: 100vh;
   padding: 40px;
 
   @media (max-width: 1000px) {
     all: unset;
-    box-sizing: border-box;
+    overflow: hidden;
+    margin-top: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
     padding: 40px;
-    width: 468px;
-    height: 100vh;
   }
 `;

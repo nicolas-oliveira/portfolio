@@ -10,12 +10,13 @@ export default function Header() {
       </Pseudocode>
 
       <TextContent>
+        <h2>Olá, me chamo</h2>
         <h1>
-          Olá,
+          <span>Nicolas Oliveira.</span>
           <br />
-          sou Nicolas,
-          <br /> web developer
+          Gosto de transformar <br /> ideias em realidade.
         </h1>
+
         <code>Em busca de ser Full Stack Developer / Linux Lover</code>
       </TextContent>
 

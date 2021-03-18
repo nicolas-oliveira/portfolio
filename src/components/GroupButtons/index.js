@@ -1,6 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+
 import CyberButton from '../CyberButton/index';
+import { GroupButtonsStyle } from './styles';
+
 import {
   FaGithub,
   FaLinkedin,
@@ -42,7 +45,7 @@ export default function GroupButtons() {
   ];
 
   return (
-    <div>
+    <GroupButtonsStyle>
       <Link to="/portifolio">
         <CyberButton Icon={FaBoxOpen} name="PORTIFOLIO_" delay="3s" time="6s" />
       </Link>
@@ -59,6 +62,6 @@ export default function GroupButtons() {
           />
         );
       })}
-    </div>
+    </GroupButtonsStyle>
   );
 }

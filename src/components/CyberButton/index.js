@@ -4,7 +4,7 @@ import { string, any } from 'prop-types';
 
 CyberButton.propTypes = {
   name: string.isRequired,
-  href: string.isRequired,
+  href: string,
   Icon: any.isRequired,
   delay: string.isRequired,
   time: string.isRequired,

@@ -5,7 +5,7 @@ export const ContainerButton = styled.a`
   --color: #ffffff;
   --shadow-primary-hue: 180;
   --shadow-primary: rgba(13, 242, 242, 90%);
-  --primary: hsl(0, 85%, calc(53 * 1%));
+  --primary-color: hsl(0, 85%, calc(53 * 1%));
   --shadow-secondary: rgba(245, 245, 61, 80%);
   --clip: polygon(0 0, 100% 0, 100% 100%, 8% 100%, 0 70%);
   --shimmy-distance: 3;
@@ -103,7 +103,7 @@ export const ContainerButton = styled.a`
 
   padding: 28px;
   margin: 20px 0 0 0;
-  background: var(--primary);
+  background: var(--primary-color);
   outline: transparent;
   border: 0;
 
@@ -118,7 +118,7 @@ export const ContainerButton = styled.a`
     left: 0;
     right: 0;
     bottom: 0;
-    background: var(--primary);
+    background: var(--primary-color);
     clip-path: var(--clip);
     z-index: -1;
   }
@@ -167,7 +167,7 @@ export const RepeatedContainerGlitch = styled.span`
     bottom: var(--border);
     left: var(--border);
     clip-path: var(--clip);
-    background: var(--primary);
+    background: var(--primary-color);
     z-index: -1;
   }
 
