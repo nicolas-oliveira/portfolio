@@ -1,19 +1,37 @@
 import styled from 'styled-components';
 
+window.addEventListener('resize', () => {
+  document
+    .querySelector(':root')
+    .style.setProperty('--vh', window.innerHeight / 100 + 'px');
+});
+
 export const AboutText = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 
-  font-size: 1.8em;
+  font-size: 22px;
   max-width: 728px;
-  height: 100vh;
 
+  min-height: -webkit-fill-available;
+  min-height: calc(100 * var(--vh));
+
+  margin-top: 10px;
   margin-bottom: 40px;
 
-  @media (max-width: 728px) {
-    font-size: 20px;
+  @media (max-width: 768px) {
+    font-size: 18px;
+  }
+  @media (max-width: 425px) {
+    font-size: 17px;
+  }
+  @media (max-width: 425px) {
+    font-size: 17px;
+  }
+  @media (max-width: 375px) {
+    font-size: 16px;
   }
 `;
 export const TextSelf = styled.div`

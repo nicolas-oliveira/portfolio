@@ -38,13 +38,13 @@ export const Container = styled.div`
   &:first-child {
     bottom: -7em;
     right: -150px;
-    opacity: 0.5;
+    opacity: 0.3;
   }
 
   &:last-child {
     bottom: -7em;
     left: -150px;
-    opacity: 0.5;
+    opacity: 0.3;
   }
 
   @media (max-width: 728px) {
@@ -63,6 +63,14 @@ export const Container = styled.div`
 
     &:last-child {
       left: -90px;
+    }
+    &:nth-child(2) {
+      h1 {
+        font-size: 14px;
+      }
+      p {
+        font-size: 9px;
+      }
     }
   }
 `;

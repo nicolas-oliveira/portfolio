@@ -116,21 +116,25 @@ export default class Carousel extends Component {
         <ActionsContainer>
           {previous ? (
             <ActionButton onClick={() => this.decrementArray()}>
-              <IoIosArrowBack /> <span>Anterior</span>
+              <IoIosArrowBack className="IoIosArrowBack" />{' '}
+              <span>Anterior</span>
             </ActionButton>
           ) : (
             <ActionButton onClick={() => this.decrementArray()} disabled>
-              <IoIosArrowBack /> <span>Anterior</span>
+              <IoIosArrowBack className="IoIosArrowBack" />{' '}
+              <span>Anterior</span>
             </ActionButton>
           )}
 
           {next ? (
             <ActionButton onClick={() => this.incrementArray()}>
-              <span>Próximo</span> <IoIosArrowForward />
+              <span>Próximo</span>{' '}
+              <IoIosArrowForward className="IoIosArrowForward" />
             </ActionButton>
           ) : (
             <ActionButton onClick={() => this.incrementArray()} disabled>
-              <span>Próximo</span> <IoIosArrowForward />
+              <span>Próximo</span>{' '}
+              <IoIosArrowForward className="IoIosArrowForward" />
             </ActionButton>
           )}
         </ActionsContainer>
