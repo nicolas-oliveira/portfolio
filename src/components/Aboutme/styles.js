@@ -6,17 +6,17 @@ export const AboutText = styled.div`
   align-items: center;
   justify-content: center;
 
-  font-size: 24px;
+  font-size: 1.8em;
   max-width: 800px;
   height: 100vh;
 `;
 export const TextSelf = styled.div`
   h1 {
-    margin-bottom: 25px;
+    margin-bottom: 0.2em;
   }
 
   p {
-    margin-bottom: 10px;
+    margin-bottom: 0.5em;
   }
 `;
 
@@ -27,7 +27,7 @@ export const Center = styled.div`
   justify-content: center;
 
   span:first-child {
-    margin-top: 60px;
+    margin-top: 1em;
   }
   span {
     color: rgba(255, 255, 255, 0.3);

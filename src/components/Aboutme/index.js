@@ -10,23 +10,24 @@ export default function Aboutme() {
       <TextSelf>
         <h1>Sobre mim</h1>
         <p>
-          Olá! Sou Nicolas e recentemente estudo e atuo como Software Developer
-          em Passos, Minas Gerais.
+          Olá! Me chamo Nicolas e estou atuando e me aperfeiçoando como Software
+          Developer em Passos, Minas Gerais.
         </p>
         <p>
-          Atualmente gosto de criar coisas na Web e experimentar de tudo um
-          pouco. Buscando sempre coisas novas e me atualizar sempre.
+          Atualmente crio coisas na Web e gosto bastante de experimentar de tudo
+          um pouco. Buscando sempre aprender habilidades novas e me atualizar
+          sempre.
         </p>
         <p>
           Estou graduando atualmente no curso de{' '}
-          <a>Sistemas de Informações na UEMG</a>
+          <a>Sistemas de Informações na UEMG</a> (Previsão de término em 2023)
         </p>
         <p>
-          Adquiri o gosto por tecnologia através do Linux, que por pura
-          curiosidade, comecei a lidar e resolver problemas no meu computador
-          pessoal sem perceber. Portanto sou muito conectado no mundo Open
-          Source!
+          E posso dizer que adquiri o gosto por tecnologia através do Linux, que
+          por pura curiosidade, comecei a lidar e resolver problemas no meu
+          computador pessoal sem perceber.
         </p>
+        <p>Portanto, sou muito conectado no mundo Open Source!</p>
       </TextSelf>
       <Center>
         <span>Veja o que construi</span>

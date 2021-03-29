@@ -29,6 +29,7 @@ export const Container = styled.div`
   position: relative;
   padding: 1em;
   margin-bottom: 3em;
+  max-width: 100vw;
 
   &:nth-child(2) {
     z-index: 1;

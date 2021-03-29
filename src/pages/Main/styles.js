@@ -5,6 +5,8 @@ export const MainStyle = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: center;
+
+  overflow-x: hidden;
 `;
 
 export const RelativeChildrenStyle = styled.div`
@@ -12,18 +14,22 @@ export const RelativeChildrenStyle = styled.div`
   align-items: center;
   justify-content: space-evenly;
   grid-template-columns: 3fr 1fr;
+
   min-width: 1024px;
   height: 100vh;
   padding: 40px;
 
-  @media (max-width: 1000px) {
+  @media (max-width: 1024px) {
     all: unset;
-    overflow: hidden;
-    margin-top: 50px;
+
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
+
+    overflow: hidden;
+
+    margin-top: 50px;
     padding: 40px;
   }
 `;

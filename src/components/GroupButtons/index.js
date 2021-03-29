@@ -7,7 +7,7 @@ import { GroupButtonsStyle } from './styles';
 import {
   FaGithub,
   FaLinkedin,
-  FaTwitter,
+  FaMailBulk,
   FaHatWizard,
   FaBoxOpen,
 } from 'react-icons/fa';
@@ -36,9 +36,9 @@ export default function GroupButtons() {
       time: '5s',
     },
     {
-      href: 'https://twitter.com/NickCageNick1',
-      Icon: FaTwitter,
-      name: 'TWITTER_',
+      href: 'mailto:nicolas.oliveira.ug@gmail.com',
+      Icon: FaMailBulk,
+      name: 'EMAIL_',
       delay: '8s',
       time: '7s',
     },

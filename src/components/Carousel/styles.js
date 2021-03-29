@@ -5,10 +5,8 @@ export const CarouselContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
+  margin-bottom: 20px;
   flex-wrap: wrap;
-  min-height: 100vh;
-
   position: relative;
 `;
 
@@ -21,10 +19,11 @@ export const GroupCards = styled.div`
   transform: translate(-50%, -50%);
 `;
 
-export const Actions = styled.div`
+export const ActionsContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+
   position: absolute;
   top: 11%;
   left: 50%;
@@ -38,37 +37,32 @@ export const Actions = styled.div`
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-
-  h2 {
-    white-space: nowrap;
-
-    &:first-child {
-      margin-right: calc(12vw);
-    }
-    cursor: pointer;
-  }
-
-  @media (max-width: 728px) {
-    h2 {
-      &:first-child {
-        margin-right: calc(14vw);
-      }
-    }
-  }
-  @media (max-width: 425px) {
-    h2 {
-      &:first-child {
-        margin-right: calc(16vw);
-      }
-    }
-  }
 `;
 
 export const ActionButton = styled.h2.attrs((props) => ({
   disabled: props.disabled,
 }))`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+  margin-bottom: 20px;
+
+  cursor: pointer;
+  white-space: nowrap;
+
+  span {
+    padding: 0 5px 0 5px;
+  }
+
   &[disabled] {
     cursor: not-allowed;
     opacity: 0.3;
+  }
+
+  &:first-child {
+    margin-right: calc(12vw);
   }
 `;

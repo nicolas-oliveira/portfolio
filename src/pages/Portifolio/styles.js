@@ -6,10 +6,6 @@ export const PortfolioContainer = styled.div`
   align-items: center;
   justify-content: center;
 
-  margin: 0 15%;
-  margin-top: 3em;
-  overflow-x: hidden;
-
   h2 {
     font-size: 1.5em;
     text-transform: uppercase;
@@ -26,15 +22,14 @@ export const PortfolioContainer = styled.div`
     font-size: 12px;
   }
   @media (max-width: 1024px) {
+    padding: 40px;
     font-size: 11px;
-    margin: 0 5%;
   }
   @media (max-width: 728px) {
-    font-size: 9px;
-    margin: 0 2%;
+    font-size: 8px;
   }
   @media (max-width: 425px) {
-    font-size: 8px;
+    font-size: 7px;
     margin: 0;
   }
 `;

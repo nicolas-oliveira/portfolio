@@ -3,8 +3,14 @@ import React, { Component } from 'react';
 import graphql from '../../services/graphql';
 import { gql } from '@apollo/client';
 
-import { CarouselContainer, GroupCards, Actions, ActionButton } from './styles';
+import {
+  CarouselContainer,
+  GroupCards,
+  ActionsContainer,
+  ActionButton,
+} from './styles';
 import RepoCard from '../../components/RepoCard/index';
+import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 
 export default class Carousel extends Component {
   state = {
@@ -107,27 +113,27 @@ export default class Carousel extends Component {
 
     return (
       <CarouselContainer>
-        <Actions>
+        <ActionsContainer>
           {previous ? (
             <ActionButton onClick={() => this.decrementArray()}>
-              &larr; Anterior
+              <FaArrowLeft /> <span>Anterior</span>
             </ActionButton>
           ) : (
             <ActionButton onClick={() => this.decrementArray()} disabled>
-              &larr; Anterior
+              <FaArrowLeft /> <span>Anterior</span>
             </ActionButton>
           )}
 
           {next ? (
             <ActionButton onClick={() => this.incrementArray()}>
-              Próximo &rarr;
+              <span>Próximo</span> <FaArrowRight />
             </ActionButton>
           ) : (
             <ActionButton onClick={() => this.incrementArray()} disabled>
-              Próximo &rarr;
+              <span>Próximo</span> <FaArrowRight />
             </ActionButton>
           )}
-        </Actions>
+        </ActionsContainer>
 
         <GroupCards>
           {showCase.map((repository) => {
