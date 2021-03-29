@@ -46,8 +46,8 @@ export default function GroupButtons() {
 
   return (
     <GroupButtonsStyle>
-      <Link to="/portifolio">
-        <CyberButton Icon={FaBoxOpen} name="PORTIFOLIO_" delay="3s" time="6s" />
+      <Link to="/portfolio">
+        <CyberButton Icon={FaBoxOpen} name="PORTFOLIO_" delay="3s" time="6s" />
       </Link>
 
       {buttonsProps.map(({ href, Icon, name, delay, time }, index) => {
