@@ -7,8 +7,14 @@ export const AboutText = styled.div`
   justify-content: center;
 
   font-size: 1.8em;
-  max-width: 800px;
+  max-width: 728px;
   height: 100vh;
+
+  margin-bottom: 40px;
+
+  @media (max-width: 728px) {
+    font-size: 20px;
+  }
 `;
 export const TextSelf = styled.div`
   h1 {
@@ -37,7 +43,7 @@ export const Center = styled.div`
   }
 
   img {
-    width: 200px;
+    width: 10em;
     border-radius: 50%;
   }
 

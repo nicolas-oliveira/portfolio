@@ -18,7 +18,7 @@ export const Container = styled.div`
     0.01% 99.99%
   );
 
-  --color-title-background: #551c1c;
+  --color-title-background: #6d2020;
   --color-title-border: #f51919;
   --filter-title-neon: drop-shadow(1px 1px 7px var(--color-title-border));
 
@@ -29,7 +29,6 @@ export const Container = styled.div`
   position: relative;
   padding: 1em;
   margin-bottom: 3em;
-  max-width: 100vw;
 
   &:nth-child(2) {
     z-index: 1;

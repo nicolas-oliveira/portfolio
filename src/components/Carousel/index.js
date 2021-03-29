@@ -10,7 +10,7 @@ import {
   ActionButton,
 } from './styles';
 import RepoCard from '../../components/RepoCard/index';
-import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
+import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 
 export default class Carousel extends Component {
   state = {
@@ -116,21 +116,21 @@ export default class Carousel extends Component {
         <ActionsContainer>
           {previous ? (
             <ActionButton onClick={() => this.decrementArray()}>
-              <FaArrowLeft /> <span>Anterior</span>
+              <IoIosArrowBack /> <span>Anterior</span>
             </ActionButton>
           ) : (
             <ActionButton onClick={() => this.decrementArray()} disabled>
-              <FaArrowLeft /> <span>Anterior</span>
+              <IoIosArrowBack /> <span>Anterior</span>
             </ActionButton>
           )}
 
           {next ? (
             <ActionButton onClick={() => this.incrementArray()}>
-              <span>Próximo</span> <FaArrowRight />
+              <span>Próximo</span> <IoIosArrowForward />
             </ActionButton>
           ) : (
             <ActionButton onClick={() => this.incrementArray()} disabled>
-              <span>Próximo</span> <FaArrowRight />
+              <span>Próximo</span> <IoIosArrowForward />
             </ActionButton>
           )}
         </ActionsContainer>

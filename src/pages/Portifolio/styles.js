@@ -22,14 +22,14 @@ export const PortfolioContainer = styled.div`
     font-size: 12px;
   }
   @media (max-width: 1024px) {
-    padding: 40px;
+    padding: 0 30px;
     font-size: 11px;
+    overflow-x: hidden;
   }
   @media (max-width: 728px) {
     font-size: 8px;
   }
   @media (max-width: 425px) {
     font-size: 7px;
-    margin: 0;
   }
 `;

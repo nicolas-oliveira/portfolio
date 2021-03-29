@@ -1,6 +1,6 @@
 import React from 'react';
 import { AboutText, Center, TextSelf } from './styles';
-import { FaArrowDown } from 'react-icons/fa';
+import { IoIosArrowDown } from 'react-icons/io';
 export default function Aboutme() {
   return (
     <AboutText>
@@ -30,9 +30,9 @@ export default function Aboutme() {
         <p>Portanto, sou muito conectado no mundo Open Source!</p>
       </TextSelf>
       <Center>
-        <span>Veja o que construi</span>
+        <span>Continue lendo</span>
         <span>
-          <FaArrowDown />
+          <IoIosArrowDown />
         </span>
       </Center>
     </AboutText>

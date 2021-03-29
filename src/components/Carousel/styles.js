@@ -5,29 +5,26 @@ export const CarouselContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-bottom: 20px;
+  margin-bottom: 100px;
   flex-wrap: wrap;
   position: relative;
 `;
 
 export const GroupCards = styled.div`
   display: flex;
+  justify-content: center;
+  align-items: center;
   flex-direction: row;
-  position: absolute;
-  top: 42%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  margin-top: 4em;
+
+  max-height: 28.4em;
+  max-width: 28.4em;
 `;
 
 export const ActionsContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-
-  position: absolute;
-  top: 11%;
-  left: 50%;
-  transform: translate(-50%, -50%);
 
   margin-bottom: 1em;
 
@@ -46,9 +43,6 @@ export const ActionButton = styled.h2.attrs((props) => ({
   flex-direction: row;
   align-items: center;
   justify-content: center;
-
-  padding: 20px;
-  margin-bottom: 20px;
 
   cursor: pointer;
   white-space: nowrap;

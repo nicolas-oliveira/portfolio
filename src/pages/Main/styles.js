@@ -28,8 +28,6 @@ export const RelativeChildrenStyle = styled.div`
     flex-direction: column;
 
     overflow: hidden;
-
-    margin-top: 50px;
-    padding: 40px;
+    padding: 40px 10px;
   }
 `;
