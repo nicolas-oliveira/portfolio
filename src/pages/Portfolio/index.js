@@ -5,7 +5,7 @@ import Carousel from '../../components/Carousel';
 
 import { PortfolioContainer } from './styles';
 
-export default class Portifolio extends Component {
+export default class Portfolio extends Component {
   render() {
     return (
       <PortfolioContainer>
