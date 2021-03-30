@@ -30,15 +30,15 @@ export const Container = styled.div`
   padding: 1em;
   margin-bottom: 3em;
 
-  &:nth-child(2) {
-    z-index: 1;
-    opacity: 0.99;
-  }
-
   &:first-child {
     bottom: -7em;
     right: -150px;
     opacity: 0.3;
+  }
+
+  &:nth-child(2) {
+    z-index: 1;
+    opacity: 0.99;
   }
 
   &:last-child {
@@ -56,14 +56,12 @@ export const Container = styled.div`
       left: -120px;
     }
   }
+
   @media (max-width: 425px) {
     &:first-child {
       right: -90px;
     }
 
-    &:last-child {
-      left: -90px;
-    }
     &:nth-child(2) {
       h1 {
         font-size: 14px;
@@ -71,6 +69,10 @@ export const Container = styled.div`
       p {
         font-size: 9px;
       }
+    }
+
+    &:last-child {
+      left: -90px;
     }
   }
 `;

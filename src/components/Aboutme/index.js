@@ -11,12 +11,12 @@ export default function Aboutme() {
         <TextSelf>
           <h1>Sobre mim</h1>
           <p>
-            Olá! Me chamo Nicolas e estou atuando e me aperfeiçoando como
-            Software Developer em Passos, Minas Gerais.
+            Me chamo Nicolas e estou atuando e me aperfeiçoando como Software
+            Developer em Passos, Minas Gerais.
           </p>
           <p>
-            Atualmente crio coisas na Web e gosto bastante de experimentar de
-            tudo um pouco. Buscando sempre aprender habilidades novas e me
+            Atualmente crio projetos para a Web e gosto bastante de experimentar
+            de tudo um pouco. Buscando sempre aprender habilidades novas e me
             atualizar sempre.
           </p>
           <p>
@@ -37,7 +37,7 @@ export default function Aboutme() {
           </span>
         </Center>
       </AboutText>
-      <h2>Alguns projetos que já criei:</h2>
+      <h3>Alguns projetos que já criei:</h3>
     </>
   );
 }

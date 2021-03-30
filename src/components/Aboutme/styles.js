@@ -15,8 +15,8 @@ export const AboutText = styled.div`
   font-size: 22px;
   max-width: 728px;
 
-  min-height: -webkit-fill-available;
-  min-height: calc(100 * var(--vh));
+  min-height: -webkit-fill-available !important;
+  min-height: calc(100 * var(--vh)) !important;
 
   margin-top: 10px;
   margin-bottom: 40px;
