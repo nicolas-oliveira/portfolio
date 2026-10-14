@@ -1,7 +1,10 @@
 import React from 'react';
 import { Container, Pseudocode, TextContent } from './styles';
+import { profileData } from '../../data/profile';
 
 export default function Header() {
+  const { name, greeting, headline, subheadline } = profileData;
+
   return (
     <Container>
       <Pseudocode>
@@ -10,14 +13,14 @@ export default function Header() {
       </Pseudocode>
 
       <TextContent>
-        <h2>Olá, me chamo</h2>
+        <h2>{greeting}</h2>
         <h1>
-          <span>Nicolas Oliveira.</span>
+          <span>{name}.</span>
           <br />
-          Gosto de transformar <br /> ideias em realidade.
+          {headline}
         </h1>
 
-        <code>Em busca de ser Full Stack Developer / Linux Lover</code>
+        <code>{subheadline}</code>
       </TextContent>
 
       <Pseudocode>

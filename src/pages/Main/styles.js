@@ -4,30 +4,33 @@ export const MainStyle = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: center;
-
+  min-height: 100vh;
+  min-height: 100dvh;
+  width: 100%;
   overflow-x: hidden;
 `;
 
-export const RelativeChildrenStyle = styled.div`
+export const RelativeChildrenStyle = styled.main`
   display: grid;
   align-items: center;
   justify-content: space-evenly;
   grid-template-columns: 3fr 1fr;
-
-  min-width: 1024px;
-  height: 100vh;
+  width: 100%;
+  max-width: 1280px;
+  min-height: 100vh;
+  min-height: 100dvh;
   padding: 40px;
+  box-sizing: border-box;
 
   @media (max-width: 1024px) {
-    all: unset;
-
     display: flex;
-    align-items: center;
-    justify-content: center;
     flex-direction: column;
-
-    overflow: hidden;
-    padding: 40px 10px;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    height: auto;
+    min-height: 100vh;
+    min-height: 100dvh;
+    padding: 40px 20px;
   }
 `;

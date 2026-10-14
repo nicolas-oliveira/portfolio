@@ -1,6 +1,7 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+import { Link } from 'react-router-dom';
 
-export const ContainerButton = styled.a`
+const cyberButtonBase = css`
   --border: 4px;
   --color: #ffffff;
   --shadow-primary-hue: 180;
@@ -89,20 +90,17 @@ export const ContainerButton = styled.a`
   );
 
   display: flex;
-  flex-direction: center;
   align-items: center;
   justify-content: center;
   position: relative;
 
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
   user-select: none;
+  cursor: pointer;
+  text-decoration: none;
+  color: #fff;
 
-  padding: 28px;
-  margin: 20px 0 0 0;
+  padding: 24px;
+  margin: 16px 0 0 0;
   background: var(--primary-color);
   outline: transparent;
   border: 0;
@@ -111,8 +109,19 @@ export const ContainerButton = styled.a`
   font-size: 18px;
   box-shadow: inset -3px 0 0 var(--shadow-primary);
   clip-path: polygon(0 0, 110% -10%, 110% 110%, 10% 110%, -10% 40%);
+  transition: transform 0.15s ease, filter 0.15s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.1);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
 
   &:before {
+    content: '';
     position: absolute;
     top: 0;
     left: 0;
@@ -125,12 +134,24 @@ export const ContainerButton = styled.a`
 
   svg {
     margin: 0 10px 0 0;
+    flex-shrink: 0;
   }
+`;
+
+export const StyledAnchor = styled.a`
+  ${cyberButtonBase}
+`;
+
+export const StyledLink = styled(Link)`
+  ${cyberButtonBase}
+`;
+
+export const StyledButton = styled.button`
+  ${cyberButtonBase}
 `;
 
 export const RepeatedContainerGlitch = styled.span`
   display: flex;
-  flex-direction: center;
   align-items: center;
   justify-content: center;
 
@@ -148,6 +169,7 @@ export const RepeatedContainerGlitch = styled.span`
   transform: translate(0, 100%);
   animation: glitch ${(props) => props.time} infinite ease-in-out;
   animation-delay: ${(props) => props.delay};
+  pointer-events: none;
 
   svg {
     filter: drop-shadow(2px 2px var(--shadow-primary))

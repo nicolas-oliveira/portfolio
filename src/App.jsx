@@ -1,9 +1,8 @@
 import React from 'react';
 import GlobalStyle from './styles/global';
-
 import Routes from './routes';
 
-function App() {
+export default function App() {
   return (
     <>
       <GlobalStyle />
@@ -11,5 +10,3 @@ function App() {
     </>
   );
 }
-
-export default App;
