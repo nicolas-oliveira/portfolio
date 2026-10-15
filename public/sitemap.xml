@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://nicolasoliveira.dev/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://nicolasoliveira.dev/post/o-que-e-autenticacao</loc>
+    <lastmod>2024-07-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://nicolasoliveira.dev/images/posts/o-que-e-autenticacao/cover.webp</image:loc>
+      <image:title>O que é Autenticação?</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://nicolasoliveira.dev/post/o-basico-do-sequelize-em-2-minutos</loc>
+    <lastmod>2021-07-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://nicolasoliveira.dev/images/posts/o-basico-do-sequelize-em-2-minutos/cover.webp</image:loc>
+      <image:title>O básico do sequelize em 2 minutos</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://nicolasoliveira.dev/post/ainda-nao-aprendeu-redux-parte-2</loc>
+    <lastmod>2021-07-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://nicolasoliveira.dev/images/posts/ainda-nao-aprendeu-redux-parte-2/cover.webp</image:loc>
+      <image:title>Ainda não aprendeu Redux? Parte 2</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://nicolasoliveira.dev/post/ainda-nao-entendeu-redux-parte-3</loc>
+    <lastmod>2021-07-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://nicolasoliveira.dev/images/posts/ainda-nao-entendeu-redux-parte-3/cover.webp</image:loc>
+      <image:title>Ainda não entendeu Redux? Parte 3</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://nicolasoliveira.dev/post/ainda-nao-entendeu-redux-se-liga-nisso</loc>
+    <lastmod>2021-07-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://nicolasoliveira.dev/images/posts/ainda-nao-entendeu-redux-se-liga-nisso/cover.webp</image:loc>
+      <image:title>Ainda não entendeu Redux? Se liga nisso</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://nicolasoliveira.dev/post/o-incrivel-mundo-das-high-order-functions</loc>
+    <lastmod>2021-07-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://nicolasoliveira.dev/images/posts/o-incrivel-mundo-das-high-order-functions/cover.webp</image:loc>
+      <image:title>O incrível mundo das High Order Functions</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://nicolasoliveira.dev/post/docker-tudo-que-voce-precisa-saber-em-9-minutos</loc>
+    <lastmod>2021-03-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://nicolasoliveira.dev/images/posts/docker-tudo-que-voce-precisa-saber-em-9-minutos/cover.webp</image:loc>
+      <image:title>Docker, tudo que você precisa saber em 9 minutos</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://nicolasoliveira.dev/post/radicle-um-grande-candidato-como-alternativa-ao-github-gitlab-e-bitbucket</loc>
+    <lastmod>2021-03-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://nicolasoliveira.dev/images/posts/radicle-um-grande-candidato-como-alternativa-ao-github-gitlab-e-bitbucket/cover.webp</image:loc>
+      <image:title>Radicle um grande candidato como alternativa ao Github, Gitlab e Bitbucket!</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://nicolasoliveira.dev/post/como-configurar-o-mongodb-localmente-no-backend-usando-docker-e-mongoose</loc>
+    <lastmod>2021-01-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://nicolasoliveira.dev/images/posts/como-configurar-o-mongodb-localmente-no-backend-usando-docker-e-mongoose/cover.webp</image:loc>
+      <image:title>Como configurar o MongoDB localmente no backend usando Docker e Mongoose</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://nicolasoliveira.dev/post/padrao-de-codigo-com-eslint-prettier-e-babel-no-react</loc>
+    <lastmod>2021-01-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://nicolasoliveira.dev/images/posts/padrao-de-codigo-com-eslint-prettier-e-babel-no-react/cover.webp</image:loc>
+      <image:title>Padrão de código com Eslint, Prettier e Babel no React</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://nicolasoliveira.dev/post/como-juntar-varios-commits-em-um-so</loc>
+    <lastmod>2021-01-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://nicolasoliveira.dev/images/posts/como-juntar-varios-commits-em-um-so/cover.webp</image:loc>
+      <image:title>Como juntar vários commits em um só</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://nicolasoliveira.dev/post/faca-seu-push-automaticamente-com-ssh-no-github-linux</loc>
+    <lastmod>2021-01-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://nicolasoliveira.dev/images/posts/faca-seu-push-automaticamente-com-ssh-no-github-linux/cover.webp</image:loc>
+      <image:title>Faça seu push automaticamente com SSH no Github (Linux)</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://nicolasoliveira.dev/post/git-para-noobs</loc>
+    <lastmod>2020-12-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://nicolasoliveira.dev/images/posts/git-para-noobs/cover.webp</image:loc>
+      <image:title>Git para NOOBS</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://nicolasoliveira.dev/post/criei-um-servidor-domestico-do-zero-com-um-clone-do-google-drive-dentro</loc>
+    <lastmod>2020-12-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://nicolasoliveira.dev/images/posts/criei-um-servidor-domestico-do-zero-com-um-clone-do-google-drive-dentro/cover.webp</image:loc>
+      <image:title>Criei um servidor doméstico do ZERO com um clone do Google Drive dentro</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://nicolasoliveira.dev/post/how-to-create-a-ink-terminal-react-program</loc>
+    <lastmod>2020-12-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://nicolasoliveira.dev/images/posts/how-to-create-a-ink-terminal-react-program/cover.webp</image:loc>
+      <image:title>How to create a Ink Terminal React program</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://nicolasoliveira.dev/post/padronizacao-dos-commits-com-commitlint</loc>
+    <lastmod>2020-12-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://nicolasoliveira.dev/images/posts/padronizacao-dos-commits-com-commitlint/cover.webp</image:loc>
+      <image:title>Padronização dos Commits com CommitLint</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://nicolasoliveira.dev/post/como-criar-um-ambiente-de-desenvolvimento-com-es6-webpack</loc>
+    <lastmod>2020-12-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://nicolasoliveira.dev/images/posts/como-criar-um-ambiente-de-desenvolvimento-com-es6-webpack/cover.webp</image:loc>
+      <image:title>Como criar um ambiente de desenvolvimento com ES6 + Webpack</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://nicolasoliveira.dev/post/configure-react-without-npx-create-react-app</loc>
+    <lastmod>2020-12-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://nicolasoliveira.dev/images/posts/configure-react-without-npx-create-react-app/cover.webp</image:loc>
+      <image:title>Configure React without npx create-react-app</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://nicolasoliveira.dev/post/how-to-install-and-use-handlebars-with-express</loc>
+    <lastmod>2020-12-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://nicolasoliveira.dev/images/posts/how-to-install-and-use-handlebars-with-express/cover.webp</image:loc>
+      <image:title>How to install and use Handlebars with express</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://nicolasoliveira.dev/post/refatorando-o-nodejs-para-classes-e-es6</loc>
+    <lastmod>2020-12-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://nicolasoliveira.dev/images/posts/refatorando-o-nodejs-para-classes-e-es6/cover.webp</image:loc>
+      <image:title>Refatorando o NodeJS para classes e ES6</image:title>
+    </image:image>
+  </url>
+</urlset>

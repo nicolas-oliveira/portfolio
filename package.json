@@ -3,19 +3,28 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
+  "engines": {
+    "node": "22.x"
+  },
   "scripts": {
     "dev": "vite",
     "start": "vite",
-    "build": "vite build",
+    "build": "vite build && node scripts/generate-seo.mjs",
     "preview": "vite preview",
-    "test": "vitest run"
+    "test": "vitest run",
+    "new:post": "node scripts/create-post.mjs",
+    "migrate:hashnode": "node scripts/migrate-hashnode.mjs"
   },
   "dependencies": {
+    "github-markdown-css": "^5.9.0",
     "prop-types": "^15.8.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-icons": "^4.12.0",
+    "react-markdown": "^10.1.0",
     "react-router-dom": "^6.26.2",
+    "react-syntax-highlighter": "^16.1.2",
+    "remark-gfm": "^4.0.1",
     "styled-components": "^6.1.13"
   },
   "devDependencies": {
@@ -24,6 +33,7 @@
     "@types/node": "^26.6.5",
     "@vitejs/plugin-react": "^4.3.1",
     "jsdom": "^30.1.2",
+    "sharp": "^0.35.5",
     "vite": "^5.4.6",
     "vitest": "2.1.8"
   }

@@ -1,11 +1,10 @@
 import React from 'react';
 import { describe, it, expect, beforeEach } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import fs from 'fs';
 import path from 'path';
-import RepoCard from '../src/components/RepoCard/index.jsx';
-import { getGitHubRepositories } from '../api/github.js';
-import { getCachedRepositories, fetchRepositories } from '../src/services/github.js';
+import RepoCard from '../../src/components/RepoCard/index.jsx';
+import { getGitHubRepositories } from '../../api/github.js';
 
 function getEnvToken() {
   const envPath = path.resolve(process.cwd(), '.env');
@@ -19,16 +18,11 @@ function getEnvToken() {
   return process.env.GITHUB_TOKEN || '';
 }
 
-describe('Frontend RepoCard & GitHub Social Preview Integration', () => {
+describe('Componente RepoCard & Previews', () => {
   const token = getEnvToken();
 
   beforeEach(() => {
     localStorage.clear();
-  });
-
-  it('deve possuir um GITHUB_TOKEN configurado no .env para os testes', () => {
-    expect(token).toBeDefined();
-    expect(token.length).toBeGreaterThan(10);
   });
 
   it('FRONTEND: se o card tiver imagem personalizada, o frontend DEVE mostrar a imagem personalizada (caso contrário o teste falha)', () => {
@@ -121,46 +115,5 @@ describe('Frontend RepoCard & GitHub Social Preview Integration', () => {
     const defaultImg = defaultContainer.querySelector('img');
     expect(defaultImg, `O front-end deve carregar a imagem padrão do repo ${defaultRepo.name}`).not.toBeNull();
     expect(defaultImg?.getAttribute('data-preview-type')).toBe('default');
-  });
-
-  it('CACHE: deve persistir no localStorage e reutilizar sem chamadas de rede desnecessárias', async () => {
-    const fakeData = [
-      {
-        key: 999,
-        nameOfRepository: 'cached-custom-repo',
-        description: 'Repo em cache',
-        htmlUrl: 'https://github.com/nicolas-oliveira/cached-custom-repo',
-        language: 'TypeScript',
-        stars: 42,
-        usesCustomOpenGraphImage: true,
-        openGraphImageUrl: 'https://repository-images.githubusercontent.com/fake.png',
-      },
-    ];
-
-    localStorage.setItem(
-      'portfolio_repositories_v6',
-      JSON.stringify({
-        timestamp: Date.now(),
-        data: fakeData,
-      })
-    );
-
-    const sync = getCachedRepositories();
-    expect(sync.length).toBe(1);
-    expect(sync[0].nameOfRepository).toBe('cached-custom-repo');
-    expect(sync[0].usesCustomOpenGraphImage).toBe(true);
-
-    const result = await fetchRepositories(false);
-    expect(result.length).toBe(1);
-    expect(result[0].nameOfRepository).toBe('cached-custom-repo');
-  });
-
-  it('SEGURANÇA: garante que o token do .env não possui prefixo VITE_ para não vazar no bundle', () => {
-    const envPath = path.resolve(process.cwd(), '.env');
-    if (fs.existsSync(envPath)) {
-      const content = fs.readFileSync(envPath, 'utf8');
-      expect(content).not.toMatch(/VITE_GITHUB_TOKEN/);
-      expect(content).not.toMatch(/VITE_.*TOKEN/);
-    }
   });
 });

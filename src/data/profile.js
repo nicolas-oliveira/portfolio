@@ -2,7 +2,6 @@ import {
   FaGithub,
   FaLinkedin,
   FaMailBulk,
-  FaHatWizard,
 } from 'react-icons/fa/index.js';
 
 export const profileData = {
@@ -32,13 +31,6 @@ export const profileData = {
       Icon: FaGithub,
       delay: '2s',
       time: '6s',
-    },
-    {
-      name: 'BRUXOJS_',
-      href: 'https://bruxo.hashnode.dev',
-      Icon: FaHatWizard,
-      delay: '12s',
-      time: '7s',
     },
     {
       name: 'LINKEDIN_',

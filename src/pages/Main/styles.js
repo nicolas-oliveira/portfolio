@@ -2,8 +2,9 @@ import styled from 'styled-components';
 
 export const MainStyle = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   min-height: 100vh;
   min-height: 100dvh;
   width: 100%;
