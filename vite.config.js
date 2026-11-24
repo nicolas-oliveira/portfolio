@@ -6,9 +6,14 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
 
   // Trava de segurança contra vazamento de segredos no bundle público do cliente
-  const sensitiveVarPattern = /(TOKEN|SECRET|KEY|PAT|PASSWORD|PASSWD|AUTH|CREDENTIAL|PRIVATE)/i;
+  // Usa fronteiras de segmento (^|_)...(_|$) para não confundir AUTHOR com AUTH nem PATH com PAT
+  const sensitiveVarPattern =
+    /(^|_)(TOKEN|SECRET|KEY|PAT|PASSWORD|PASSWD|AUTH|CREDENTIAL|PRIVATE)(_|$)/i;
   const forbiddenVars = Object.keys(env).filter(
-    (key) => key.startsWith('VITE_') && sensitiveVarPattern.test(key)
+    (key) =>
+      key.startsWith('VITE_') &&
+      !key.startsWith('VITE_VERCEL_') &&
+      sensitiveVarPattern.test(key)
   );
 
   if (forbiddenVars.length > 0) {

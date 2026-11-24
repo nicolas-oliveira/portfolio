@@ -158,6 +158,31 @@ describe('Secret Scanner Pós-Build (scripts/scan-secrets.mjs)', () => {
     expect(res.stderr).toContain('VITE_GITHUB_PAT');
     expect(res.stderr).not.toContain(fakePat);
   }, 15000);
+
+  it('NÃO deve barrar variáveis públicas do sistema da Vercel como VITE_VERCEL_GIT_COMMIT_AUTHOR_NAME', () => {
+    const res = spawnSync(
+      process.execPath,
+      [
+        '--input-type=module',
+        '-e',
+        `import configFn from './vite.config.js';
+         configFn({ mode: 'production' });`,
+      ],
+      {
+        cwd: process.cwd(),
+        env: {
+          ...process.env,
+          VITE_VERCEL_GIT_COMMIT_AUTHOR_NAME: 'Nicolas Oliveira',
+          VITE_VERCEL_GIT_COMMIT_AUTHOR_LOGIN: 'nicolas-oliveira',
+          VITE_PUBLIC_PATH: '/assets',
+        },
+        stdio: 'pipe',
+        encoding: 'utf8',
+      }
+    );
+
+    expect(res.status, res.stderr).toBe(0);
+  }, 15000);
 });
 
 describe('Auditoria Gitleaks Pré-Build (scripts/run-gitleaks.mjs)', () => {
