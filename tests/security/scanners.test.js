@@ -288,6 +288,57 @@ describe('Regressão Vercel Env Vars (VITE_VERCEL_GIT_COMMIT_AUTHOR_NAME / _LOGI
     expect(result.findings.map((f) => f.ruleId)).toEqual(['env-leak:GITHUB_TOKEN']);
     expect(formatDistFindings(result.findings)).not.toContain(leakedToken);
   });
+
+  it('NÃO deve abrir brecha ampla para VITE_VERCEL_*: VITE_VERCEL_API_TOKEN deve ser bloqueado no vite.config.js e no scan-secrets.mjs', () => {
+    const fakeVercelToken = 'vercel_leaked_token_regression_123456';
+
+    const viteRes = spawnSync(
+      process.execPath,
+      [
+        '--input-type=module',
+        '-e',
+        `import configFn from './vite.config.js';
+         try {
+           configFn({ mode: 'production' });
+           process.exit(0);
+         } catch (err) {
+           console.error(err.message);
+           process.exit(1);
+         }`,
+      ],
+      {
+        cwd: process.cwd(),
+        env: {
+          ...process.env,
+          ...vercelAuthorEnv,
+          VITE_VERCEL_API_TOKEN: fakeVercelToken,
+        },
+        stdio: 'pipe',
+        encoding: 'utf8',
+      }
+    );
+
+    expect(viteRes.status).toBe(1);
+    expect(viteRes.stderr).toContain('VITE_VERCEL_API_TOKEN');
+    expect(viteRes.stderr).not.toContain('VITE_VERCEL_GIT_COMMIT_AUTHOR_NAME');
+    expect(viteRes.stderr).not.toContain(fakeVercelToken);
+
+    const distDir = path.join(tempDir, 'dist');
+    fs.mkdirSync(distDir, { recursive: true });
+    fs.writeFileSync(path.join(distDir, 'bundle.js'), `const x="${fakeVercelToken}";`, 'utf8');
+
+    const distRes = scanDistDirectory({
+      rootDir: tempDir,
+      distDir,
+      envObj: {
+        ...vercelAuthorEnv,
+        VITE_VERCEL_API_TOKEN: fakeVercelToken,
+      },
+    });
+    expect(distRes.passed).toBe(false);
+    expect(distRes.findings.map((f) => f.ruleId)).toContain('env-leak:VITE_VERCEL_API_TOKEN');
+    expect(formatDistFindings(distRes.findings)).not.toContain(fakeVercelToken);
+  }, 15000);
 });
 
 describe('Auditoria Gitleaks Pré-Build (scripts/run-gitleaks.mjs)', () => {
