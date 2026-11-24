@@ -143,7 +143,7 @@ Parabéns! Servidor 100% Configurado!
 
 # Parte 2: Instalando o NextCloud
 
-<img src="https://cdn.hashnode.com/res/hashnode/image/upload/v1607887081120/_64a_KU_v.png" style="display: flex; align-items: center; justify-content: center" />
+![NextCloud](/images/posts/criei-um-servidor-domestico-do-zero-com-um-clone-do-google-drive-dentro/nextcloud.webp)
 
 Enfim a parte mais interessante do artigo! 
 

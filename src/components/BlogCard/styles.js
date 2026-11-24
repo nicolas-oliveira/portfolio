@@ -1,34 +1,132 @@
-import styled from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 import { Link } from 'react-router-dom';
 
-export const CardLink = styled(Link)`
-  --border: 4px;
-  --color: #ffffff;
-  --shadow-primary-hue: 180;
-  --shadow-primary: rgba(13, 242, 242, 90%);
-  --primary-color: hsl(0, 85%, calc(53 * 1%));
-  --shadow-secondary: rgba(245, 245, 61, 80%);
-  --clip: polygon(0 0, 100% 0, 100% 100%, 50px 100%, 0 calc(100% - 50px));
-  --shimmy-distance: 3;
+/* Shake seco do card (aprovado) sincronizado com os picos de distorção cromática */
+const cardGlitchTwitch = keyframes`
+  0%, 100% {
+    transform: translateY(-4px);
+    filter: none;
+  }
+  7% {
+    transform: translate(2px, -3px) skewX(-1.5deg);
+    filter: contrast(1.12);
+  }
+  11% {
+    transform: translateY(-4px);
+    filter: none;
+  }
+  43% {
+    transform: translate(-2px, -5px) skewX(1.5deg);
+    filter: contrast(1.15);
+  }
+  47% {
+    transform: translateY(-4px);
+    filter: none;
+  }
+`;
 
-  --clip-one: polygon(0 0, 100% 0, 100% 28%, 0 28%, 0 28%);
-  --clip-two: polygon(0 20%, 100% 20%, 100% 48%, 0 48%, 0 48%);
-  --clip-three: polygon(0 42%, 100% 42%, 100% 64%, 0 64%, 0 64%);
-  --clip-four: polygon(0 56%, 100% 56%, 100% 72%, 0 72%, 0 72%);
-  --clip-five: polygon(0 68%, 100% 68%, 100% 84%, 0 84%, 0 84%);
-  --clip-six: polygon(0 80%, 100% 80%, 100% 100%, 50px 100%, 0 calc(100% - 50px));
-  --clip-seven: polygon(0 0, 100% 0, 100% 100%, 50px 100%, 0 calc(100% - 50px));
+/* Distorção de canal AZUL/CIANO rasgando para diagonal canto direito inferior (+X, +Y) */
+const glitchCyanDistortion = keyframes`
+  0%  { opacity: 0;    transform: translate(0, 0);                  clip-path: var(--clip-zero); }
+  /* Rajada 1: aberração cromática breve + fatias rasgadas */
+  3%  { opacity: 0.78; transform: translate(6px, 4px) skewX(-3deg); clip-path: var(--clip-full); }
+  7%  { opacity: 0.9;  transform: translate(11px, 5px) skewX(4deg); clip-path: var(--clip-one); }
+  12% { opacity: 0.85; transform: translate(7px, 4px) skewX(-2deg); clip-path: var(--clip-three); }
+  17% { opacity: 0.9;  transform: translate(13px, 6px);             clip-path: var(--clip-two); }
+  21% { opacity: 0;    transform: translate(0, 0);                  clip-path: var(--clip-zero); }
+
+  /* Silêncio */
+  36% { opacity: 0;    transform: translate(0, 0);                  clip-path: var(--clip-zero); }
+
+  /* Rajada 2: distorção intensa no meio/topo */
+  39% { opacity: 0.8;  transform: translate(8px, 5px) skewX(3deg);  clip-path: var(--clip-full); }
+  43% { opacity: 0.92; transform: translate(14px, 6px) skewX(-5deg);clip-path: var(--clip-six); }
+  49% { opacity: 0.85; transform: translate(6px, 3px) skewX(2deg);  clip-path: var(--clip-five); }
+  54% { opacity: 0;    transform: translate(0, 0);                  clip-path: var(--clip-zero); }
+
+  /* Pós-pulso de 1 linha de varredura e limpeza total */
+  72% { opacity: 0;    transform: translate(0, 0);                  clip-path: var(--clip-zero); }
+  74% { opacity: 0.85; transform: translate(9px, 4px);              clip-path: var(--clip-scanline); }
+  79% { opacity: 0;    transform: translate(0, 0);                  clip-path: var(--clip-zero); }
+  100%{ opacity: 0;    transform: translate(0, 0);                  clip-path: var(--clip-zero); }
+`;
+
+/* Distorção de canal AMARELO rasgando para diagonal canto esquerdo superior (-X, -Y) */
+const glitchYellowDistortion = keyframes`
+  0%  { opacity: 0;    transform: translate(0, 0);                     clip-path: var(--clip-zero); }
+  /* Rajada 1: canal amarelo puxando para cima/esquerda */
+  4%  { opacity: 0.72; transform: translate(-6px, -4px) skewX(3deg);   clip-path: var(--clip-full); }
+  9%  { opacity: 0.88; transform: translate(-11px, -5px) skewX(-4deg); clip-path: var(--clip-five); }
+  14% { opacity: 0.85; transform: translate(-7px, -4px) skewX(2deg);   clip-path: var(--clip-seven); }
+  19% { opacity: 0;    transform: translate(0, 0);                     clip-path: var(--clip-zero); }
+
+  /* Silêncio */
+  38% { opacity: 0;    transform: translate(0, 0);                     clip-path: var(--clip-zero); }
+
+  /* Rajada 2 */
+  40% { opacity: 0.75; transform: translate(-8px, -5px) skewX(-3deg);  clip-path: var(--clip-full); }
+  45% { opacity: 0.9;  transform: translate(-13px, -6px) skewX(5deg);  clip-path: var(--clip-one); }
+  51% { opacity: 0.82; transform: translate(-6px, -3px) skewX(-2deg);  clip-path: var(--clip-two); }
+  55% { opacity: 0;    transform: translate(0, 0);                     clip-path: var(--clip-zero); }
+
+  /* Pós-pulso e limpeza total */
+  74% { opacity: 0;    transform: translate(0, 0);                     clip-path: var(--clip-zero); }
+  76% { opacity: 0.82; transform: translate(-9px, -4px);               clip-path: var(--clip-three); }
+  81% { opacity: 0;    transform: translate(0, 0);                     clip-path: var(--clip-zero); }
+  100%{ opacity: 0;    transform: translate(0, 0);                     clip-path: var(--clip-zero); }
+`;
+
+export const CardLink = styled(Link)`
+  --border: 2px;
+  --color: #ffffff;
+  --shadow-primary: rgba(13, 242, 242, 95%);
+  --primary-color: hsl(0, 85%, calc(53 * 1%));
+  --shadow-secondary: rgba(245, 245, 61, 90%);
+  --clip: polygon(0 0, 100% 0, 100% 100%, 50px 100%, 0 calc(100% - 50px));
+
+  /* Fatias irregulares de rasgo de vídeo (RGB channel tear) */
+  --clip-zero: polygon(0 0, 100% 0, 100% 0, 0 0);
+  --clip-full: polygon(0 0, 100% 0, 100% 100%, 50px 100%, 0 calc(100% - 50px));
+  --clip-one: polygon(0 5%, 100% 5%, 100% 19%, 0 19%);
+  --clip-two: polygon(0 75%, 100% 75%, 100% 91%, 0 91%);
+  --clip-three: polygon(0 43%, 100% 43%, 100% 53%, 0 53%);
+  --clip-five: polygon(0 23%, 100% 23%, 100% 34%, 0 34%);
+  --clip-six: polygon(0 56%, 100% 56%, 100% 69%, 0 69%);
+  --clip-seven: polygon(0 13%, 100% 13%, 100% 22%, 0 22%);
+  --clip-scanline: polygon(0 36%, 100% 36%, 100% 41%, 0 41%);
 
   position: relative;
   display: flex;
   flex-direction: column;
+  text-decoration: none;
+  color: #eee;
+  overflow: visible;
+  isolation: isolate;
+  transition: filter 0.15s ease;
+
+  &:hover {
+    z-index: 2;
+    filter: brightness(1.06);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &:hover {
+      transform: translateY(-4px);
+    }
+  }
+`;
+
+export const CardSurface = styled.div`
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
   background: #231919;
   border: 1px solid rgba(245, 25, 25, 0.3);
   clip-path: var(--clip);
-  text-decoration: none;
-  color: #eee;
   box-shadow: inset -3px 0 0 rgba(245, 25, 25, 0.4);
-  transition: transform 0.15s ease, filter 0.15s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.15s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 
   &:after {
     content: '';
@@ -45,15 +143,21 @@ export const CardLink = styled(Link)`
     transition: background-color 0.2s ease, box-shadow 0.2s ease;
   }
 
-  &:hover {
+  ${CardLink}:hover & {
     transform: translateY(-4px);
-    filter: brightness(1.08);
     border-color: var(--primary-color);
     box-shadow: 0 0 15px rgba(245, 25, 25, 0.4), inset -3px 0 0 var(--primary-color);
+    animation: ${cardGlitchTwitch} ${(props) => props.$time || '0.7s'} steps(1, end) forwards;
 
     &:after {
       background: var(--primary-color);
       box-shadow: 0 0 10px rgba(245, 25, 25, 0.8);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    ${CardLink}:hover & {
+      animation: none;
     }
   }
 `;
@@ -73,7 +177,7 @@ export const BannerContainer = styled.div`
     transition: transform 0.3s ease;
   }
 
-  ${CardLink}:hover & img {
+  ${CardLink}:hover ${CardSurface} & img {
     transform: scale(1.04);
   }
 `;
@@ -95,7 +199,7 @@ export const ContentContainer = styled.div`
     transition: color 0.2s ease;
   }
 
-  ${CardLink}:hover & h2 {
+  ${CardLink}:hover ${CardSurface} & h2 {
     color: #fee715;
     text-shadow: 0 0 8px rgba(254, 231, 21, 0.6);
   }
@@ -141,180 +245,99 @@ export const ContentContainer = styled.div`
   }
 `;
 
-export const RepeatedContainerGlitch = styled.div`
+/* Base de distorção cromática pura (mix-blend-mode: screen funde apenas os canais
+   luminosos ciano/amarelo sobre o card real, sem placas escuras opacas) */
+const chromaticDistortionBase = css`
   display: flex;
   flex-direction: column;
   position: absolute;
-  top: calc(var(--border) * -1);
-  left: calc(var(--border) * -1);
-  right: calc(var(--border) * -1);
-  bottom: calc(var(--border) * -1);
-
+  inset: 0;
   opacity: 0;
-  letter-spacing: 2px;
-  background: var(--shadow-primary);
-  text-shadow: 2px 2px var(--shadow-primary), -2px -2px var(--shadow-secondary);
-  clip-path: var(--clip);
+  background: transparent;
+  mix-blend-mode: screen;
+  clip-path: var(--clip-zero);
   pointer-events: none;
   overflow: hidden;
   user-select: none;
-  z-index: 5;
+  will-change: transform, clip-path, opacity;
 
   ${BannerContainer} {
-    position: relative;
-    overflow: hidden;
-
-    img {
-      filter: invert(0.85) hue-rotate(180deg) saturate(300%) contrast(160%);
-      transform: scale(1.06) translate(calc(var(--shimmy-distance) * -1.5%), -2px) !important;
-      display: block;
-    }
-
-    &:before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(13, 242, 242, 0.45);
-      mix-blend-mode: screen;
-      transform: translate(-3px, 0);
-      z-index: 2;
-      pointer-events: none;
-    }
-
-    &:after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: repeating-linear-gradient(
-        0deg,
-        rgba(0, 0, 0, 0.5) 0px,
-        rgba(0, 0, 0, 0.5) 2px,
-        transparent 2px,
-        transparent 4px
-      ), rgba(245, 25, 25, 0.4);
-      mix-blend-mode: screen;
-      transform: translate(3px, 0);
-      z-index: 3;
-      pointer-events: none;
-    }
+    background: transparent;
   }
 
-  ${CardLink}:hover & ${BannerContainer} img {
-    filter: invert(0.85) hue-rotate(180deg) saturate(300%) contrast(160%);
-    transform: scale(1.06) translate(calc(var(--shimmy-distance) * -1.5%), -2px) !important;
+  @media (prefers-reduced-motion: reduce) {
+    display: none;
+  }
+`;
+
+/* Canal Azul/Ciano puro — distorção diagonal canto direito inferior */
+export const RepeatedContainerGlitch = styled.div`
+  ${chromaticDistortionBase}
+  z-index: 4;
+  box-shadow: inset 0 0 0 2px var(--shadow-primary);
+
+  ${BannerContainer} img {
+    filter: grayscale(100%) brightness(1.1) contrast(1.45) sepia(100%) hue-rotate(140deg) saturate(600%);
   }
 
-  span, h2, p {
-    text-shadow: 2px 2px var(--shadow-primary),
-      -2px -2px var(--shadow-secondary);
-  }
-
-  &:before {
+  ${BannerContainer}:after {
     content: '';
     position: absolute;
-    top: var(--border);
-    right: var(--border);
-    bottom: var(--border);
-    left: var(--border);
-    clip-path: var(--clip);
-    background: #231919;
-    z-index: -1;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.55) 0px,
+      rgba(0, 0, 0, 0.55) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+    pointer-events: none;
+  }
+
+  h2,
+  p,
+  span {
+    color: #0df2f2 !important;
+    text-shadow: 2px 2px 6px rgba(13, 242, 242, 0.9);
   }
 
   ${CardLink}:hover & {
-    opacity: 1;
-    animation: glitch ${(props) => props.time || '4.1s'} infinite linear;
+    animation: ${glitchCyanDistortion} ${(props) => props.$time || '0.7s'} steps(1, end) forwards;
+  }
+`;
+
+/* Canal Amarelo puro — distorção diagonal canto esquerdo superior */
+export const GlitchSecondaryLayer = styled.div`
+  ${chromaticDistortionBase}
+  z-index: 3;
+  box-shadow: inset 0 0 0 2px var(--shadow-secondary);
+
+  ${BannerContainer} img {
+    filter: grayscale(100%) brightness(1.1) contrast(1.45) sepia(100%) hue-rotate(15deg) saturate(650%);
   }
 
-  @keyframes glitch {
-    0% {
-      opacity: 100%;
-      clip-path: var(--clip-one);
-      transform: translate(calc(var(--shimmy-distance) * -1%), 0);
-    }
-    1%,
-    4% {
-      clip-path: var(--clip-one);
-      transform: translate(calc(var(--shimmy-distance) * 1.5%), 0);
-    }
-    2%,
-    5% {
-      clip-path: var(--clip-one);
-      transform: translate(calc(var(--shimmy-distance) * -1.2%), 0);
-    }
-    6% {
-      clip-path: var(--clip-one);
-      transform: translate(0, 0);
-    }
-    7%,
-    10% {
-      clip-path: var(--clip-two);
-      transform: translate(calc(var(--shimmy-distance) * 1.2%), 0);
-    }
-    8%,
-    11% {
-      clip-path: var(--clip-two);
-      transform: translate(calc(var(--shimmy-distance) * -1%), 0);
-    }
-    12% {
-      clip-path: var(--clip-two);
-      transform: translate(0, 0);
-    }
-    14%,
-    17% {
-      clip-path: var(--clip-three);
-      transform: translate(calc(var(--shimmy-distance) * -0.8%), 0);
-    }
-    15%,
-    18% {
-      clip-path: var(--clip-three);
-      transform: translate(calc(var(--shimmy-distance) * 0.8%), 0);
-    }
-    19% {
-      clip-path: var(--clip-three);
-      transform: translate(0, 0);
-    }
-    21%,
-    23% {
-      clip-path: var(--clip-four);
-      transform: translate(calc(var(--shimmy-distance) * 0.5%), 0);
-    }
-    22% {
-      clip-path: var(--clip-four);
-      transform: translate(calc(var(--shimmy-distance) * -0.5%), 0);
-    }
-    24% {
-      clip-path: var(--clip-four);
-      transform: translate(0, 0);
-    }
-    26% {
-      clip-path: var(--clip-five);
-      transform: translate(calc(var(--shimmy-distance) * -0.3%), 0);
-    }
-    28% {
-      clip-path: var(--clip-six);
-      transform: translate(calc(var(--shimmy-distance) * 0.3%), 0);
-    }
-    30%,
-    32% {
-      clip-path: var(--clip-seven);
-      opacity: 90%;
-      transform: translate(0, 0);
-    }
-    34% {
-      clip-path: var(--clip-seven);
-      opacity: 0;
-      transform: translate(0, 0);
-    }
-    100% {
-      opacity: 0;
-      transform: translate(0, 0);
-    }
+  ${BannerContainer}:after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.5) 0px,
+      rgba(0, 0, 0, 0.5) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+    pointer-events: none;
+  }
+
+  h2,
+  p,
+  span {
+    color: #f5f53d !important;
+    text-shadow: -2px -2px 6px rgba(245, 245, 61, 0.9);
+  }
+
+  ${CardLink}:hover & {
+    animation: ${glitchYellowDistortion} ${(props) => props.$time || '0.7s'} steps(1, end) forwards;
   }
 `;

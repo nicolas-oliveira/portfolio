@@ -5,9 +5,9 @@ import { MemoryRouter, Routes, Route } from 'react-router-dom';
 import Post from '../../src/pages/Post/index.jsx';
 
 describe('Página do Post (/post/:id)', () => {
-  it('deve carregar o post pelo ID, renderizar o markdown e os blocos de código', async () => {
+  it('deve carregar um post real pelo ID, renderizar o markdown e os blocos de código', async () => {
     const { container } = render(
-      <MemoryRouter initialEntries={['/post/como-funciona-o-v8']}>
+      <MemoryRouter initialEntries={['/post/refatorando-o-nodejs-para-classes-e-es6']}>
         <Routes>
           <Route path="/post/:id" element={<Post />} />
         </Routes>
@@ -30,5 +30,17 @@ describe('Página do Post (/post/:id)', () => {
     // Deve conter o botão de voltar para o Início
     const backButton = container.querySelector('a[href="/"]');
     expect(backButton).not.toBeNull();
+  });
+
+  it('deve exibir tela de ERRO 404 para artigo inexistente (incluindo IDs de mock)', async () => {
+    const { findByText } = render(
+      <MemoryRouter initialEntries={['/post/como-funciona-o-v8']}>
+        <Routes>
+          <Route path="/post/:id" element={<Post />} />
+        </Routes>
+      </MemoryRouter>
+    );
+
+    expect(await findByText(/ERRO 404/i)).not.toBeNull();
   });
 });

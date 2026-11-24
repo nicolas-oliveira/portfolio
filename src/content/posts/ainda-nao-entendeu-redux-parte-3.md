@@ -2,13 +2,13 @@
 title: "Ainda não entendeu Redux? Parte 3"
 slug: "ainda-nao-entendeu-redux-parte-3"
 publishedAt: "2021-07-09"
-subtitle: "Se você leu a parte 2https://bruxo.hashnode.dev/ainda-nao-aprendeu-redux-parte-2, eu estava mostrando como a nossa aplicação funciona sem Redux e agora vamos ir..."
-excerpt: "Se você leu a parte 2https://bruxo.hashnode.dev/ainda-nao-aprendeu-redux-parte-2, eu estava mostrando como a nossa aplicação funciona sem Redux e agora vamos ir"
+subtitle: "Se você leu a parte 2, mostramos a aplicação sem Redux — agora vamos transformar o estado em useState para Redux na prática."
+excerpt: "Se você leu a parte 2, mostramos a aplicação sem Redux — agora vamos transformar o estado em useState para Redux na prática."
 coverImage: "/images/posts/ainda-nao-entendeu-redux-parte-3/cover.webp"
 tags: ["Redux", "React", "Git", "Node.js"]
 ---
 
-Se você leu a [parte 2](https://bruxo.hashnode.dev/ainda-nao-aprendeu-redux-parte-2), eu estava mostrando como a nossa aplicação funciona sem **Redux** e agora vamos ir para a parte mais importante, que é a transformação da aplicação em `useState` para `Redux`.
+Se você leu a [parte 2](/post/ainda-nao-aprendeu-redux-parte-2), eu estava mostrando como a nossa aplicação funciona sem **Redux** e agora vamos ir para a parte mais importante, que é a transformação da aplicação em `useState` para `Redux`.
 
 # Transformando em Redux aos poucos com **objetos**
 
@@ -126,7 +126,7 @@ function Form() {
 export default connect( )(Form);
 ```
 
-> Se você quer entender o porquê desses dois parênteses ai [Clica aqui!](https://bruxo.hashnode.dev/o-incrivel-mundo-das-high-order-functions) , já criei um artigo muito daora sobre isso.
+> Se você quer entender o porquê desses dois parênteses ai [Clica aqui!](/post/o-incrivel-mundo-das-high-order-functions) , já criei um artigo muito daora sobre isso.
 
 O `connect` por padrão tem dois parâmetros: O primeiro tem o estado global e as funções complementares como o `dispatch` e o segundo é o seu próprio componente. A grosso modo, o primeiro parênteses irá passar propriedades novas como parâmetro para o segundo parênteses (nosso componente).
 
@@ -291,4 +291,4 @@ function setLanguage(language) {
 }
 ```
 
-<iframe src="https://codesandbox.io/embed/lucid-violet-r6gxp?fontsize=14&hidenavigation=1&theme=dark" style="width:100%;height:500px;border:0;border-radius:4px;overflow:hidden" sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"></iframe>
+> [Abrir exemplo interativo no CodeSandbox](https://codesandbox.io/s/lucid-violet-r6gxp)

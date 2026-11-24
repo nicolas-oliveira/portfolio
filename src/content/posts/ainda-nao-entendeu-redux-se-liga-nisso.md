@@ -54,6 +54,6 @@ Obviamente o que chamei de estado global deve ser configurado da forma correta s
 - Transformando em Redux aos poucos com `objetos`
 - Entendendo o que aconteceu até aqui
 
-### E não acabou fiote!  [Clica nesse link](https://bruxo.hashnode.dev/ainda-nao-aprendeu-redux-parte-2)  que a continuação vem ai com a mão na massa!
+### E não acabou fiote!  [Clica nesse link](/post/ainda-nao-aprendeu-redux-parte-2)  que a continuação vem ai com a mão na massa!
 
 Valeu!

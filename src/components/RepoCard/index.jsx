@@ -22,7 +22,7 @@ export default function RepoCard({
 
   useEffect(() => {
     setImageError(false);
-  }, [openGraphImageUrl]);
+  }, [openGraphImageUrl, usesCustomOpenGraphImage]);
 
   if (!nameOfRepository) {
     return (
@@ -44,8 +44,10 @@ export default function RepoCard({
     );
   }
 
-  const showRealImage = Boolean(openGraphImageUrl && !imageError);
-  const previewType = usesCustomOpenGraphImage ? 'custom' : 'default';
+  const showCustomImage = Boolean(
+    usesCustomOpenGraphImage && openGraphImageUrl && !imageError
+  );
+  const previewType = showCustomImage ? 'custom' : 'fallback';
 
   return (
     <Container
@@ -62,15 +64,15 @@ export default function RepoCard({
       <Cover>
         <div className="submask">
           <PreviewContainer data-preview-type={previewType}>
-            {showRealImage ? (
+            {showCustomImage ? (
               <img
                 src={openGraphImageUrl}
                 alt={`Social preview do repositório ${nameOfRepository}`}
-                data-preview-type={previewType}
+                data-preview-type="custom"
                 onError={() => setImageError(true)}
               />
             ) : (
-              <FallbackCyberBanner aria-hidden="true">
+              <FallbackCyberBanner aria-hidden="true" data-preview-type="fallback">
                 <div className="terminal-header">
                   <span className="dot" />
                   <span className="dot" />

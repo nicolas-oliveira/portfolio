@@ -2,15 +2,15 @@
 title: "Ainda não aprendeu Redux? Parte 2"
 slug: "ainda-nao-aprendeu-redux-parte-2"
 publishedAt: "2021-07-09"
-subtitle: "Se você leu a parte 1https://bruxo.hashnode.dev/ainda-nao-entendeu-redux-se-liga-nisso eu estava explicando o problema que o Redux resolve e aqui sobrou elabora..."
-excerpt: "Se você leu a parte 1https://bruxo.hashnode.dev/ainda-nao-entendeu-redux-se-liga-nisso eu estava explicando o problema que o Redux resolve e aqui sobrou elabora"
+subtitle: "Se você leu a parte 1, eu estava explicando o problema que o Redux resolve e agora vamos colocar a mão na massa configurando o projeto."
+excerpt: "Se você leu a parte 1, eu estava explicando o problema que o Redux resolve e agora vamos colocar a mão na massa configurando o projeto."
 coverImage: "/images/posts/ainda-nao-aprendeu-redux-parte-2/cover.webp"
 tags: ["Redux", "React", "Node.js", "JavaScript"]
 ---
 
 ## Metendo a mão na massa!
 
-Se você [leu a parte 1](https://bruxo.hashnode.dev/ainda-nao-entendeu-redux-se-liga-nisso) eu estava explicando o problema que o Redux resolve e aqui sobrou elaborar e resolver como o Redux é configurado.
+Se você [leu a parte 1](/post/ainda-nao-entendeu-redux-se-liga-nisso) eu estava explicando o problema que o Redux resolve e aqui sobrou elaborar e resolver como o Redux é configurado.
 
 Vamos colocar isso no papel então. Chama aí o `npx create-react-app` que vou te mostrar um belo exemplo.
 
@@ -180,8 +180,8 @@ export default Form;
 
 Olha como ficou tudo isso:
 
-<iframe src="https://codesandbox.io/embed/tender-platform-5o6qd?fontsize=14&hidenavigation=1&theme=dark" style="width:100%;height:500px;border:0;border-radius:4px;overflow:hidden" sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"></iframe>
+> [Abrir exemplo interativo no CodeSandbox](https://codesandbox.io/s/tender-platform-5o6qd)
 
 ### Tudo certo até ai? Agora que o bixo pega, vamos mudar isso pra **Redux**!
 
-### [Clica aqui](https://bruxo.hashnode.dev/ainda-nao-entendeu-redux-parte-3) pra continuar esse desafio insano de aprender uma das bibliotecas mais importantes do mundo front-end!
+### [Clica aqui](/post/ainda-nao-entendeu-redux-parte-3) pra continuar esse desafio insano de aprender uma das bibliotecas mais importantes do mundo front-end!

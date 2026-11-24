@@ -18,26 +18,32 @@ export default function BlogGrid() {
 
   const sentinelRef = useRef(null);
   const initialLoadDone = useRef(false);
+  const loadingRef = useRef(false);
 
   const loadArticles = useCallback(async (pageToLoad) => {
-    if (loading) return;
+    if (loadingRef.current) return;
+    loadingRef.current = true;
     setLoading(true);
     setError(null);
 
     try {
       const response = await getArticles({ page: pageToLoad, limit: 9 });
-      setArticles((prev) =>
-        pageToLoad === 1 ? response.items : [...prev, ...response.items]
-      );
+      setArticles((prev) => {
+        if (pageToLoad === 1) return response.items;
+        const existingIds = new Set(prev.map((a) => a.id));
+        const uniqueNext = response.items.filter((a) => !existingIds.has(a.id));
+        return [...prev, ...uniqueNext];
+      });
       setHasMore(response.hasMore);
       setPage(response.page);
     } catch (err) {
       console.error('Erro ao buscar artigos do blog:', err);
       setError('Falha na conexão com o terminal de artigos.');
     } finally {
+      loadingRef.current = false;
       setLoading(false);
     }
-  }, [loading]);
+  }, []);
 
   // Carregamento inicial (página 1)
   useEffect(() => {

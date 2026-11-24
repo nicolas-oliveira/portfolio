@@ -6,10 +6,9 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
 
   // Trava de segurança contra vazamento de segredos no bundle público do cliente
+  const sensitiveVarPattern = /(TOKEN|SECRET|KEY|PAT|PASSWORD|PASSWD|AUTH|CREDENTIAL|PRIVATE)/i;
   const forbiddenVars = Object.keys(env).filter(
-    (key) =>
-      key.startsWith('VITE_') &&
-      (key.includes('TOKEN') || key.includes('SECRET') || key.includes('KEY'))
+    (key) => key.startsWith('VITE_') && sensitiveVarPattern.test(key)
   );
 
   if (forbiddenVars.length > 0) {
@@ -24,23 +23,28 @@ export default defineConfig(({ mode }) => {
 
   const githubToken = env.GITHUB_TOKEN || process.env.GITHUB_TOKEN;
 
+  const githubApiMiddleware = async (req, res) => {
+    try {
+      const repos = await getGitHubRepositories(githubToken);
+      res.setHeader('Content-Type', 'application/json');
+      res.end(JSON.stringify(repos));
+    } catch (err) {
+      res.statusCode = 500;
+      res.setHeader('Content-Type', 'application/json');
+      res.end(JSON.stringify({ error: 'Falha ao buscar repositórios' }));
+    }
+  };
+
   return {
     plugins: [
       react(),
       {
         name: 'local-api-github-middleware',
         configureServer(server) {
-          server.middlewares.use('/api/github', async (req, res) => {
-            try {
-              const repos = await getGitHubRepositories(githubToken);
-              res.setHeader('Content-Type', 'application/json');
-              res.end(JSON.stringify(repos));
-            } catch (err) {
-              res.statusCode = 500;
-              res.setHeader('Content-Type', 'application/json');
-              res.end(JSON.stringify({ error: err.message }));
-            }
-          });
+          server.middlewares.use('/api/github', githubApiMiddleware);
+        },
+        configurePreviewServer(server) {
+          server.middlewares.use('/api/github', githubApiMiddleware);
         },
       },
     ],

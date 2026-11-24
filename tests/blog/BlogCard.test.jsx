@@ -44,8 +44,10 @@ describe('Componente BlogCard', () => {
       </BrowserRouter>
     );
 
-    // Deve possuir o elemento de overlay de glitch para animação no hover
+    // Deve possuir as camadas cromáticas de glitch (ciano diagonal inferior direita + amarelo diagonal superior esquerda)
     const glitchElement = container.querySelector('[data-glitch]');
+    const glitchSecondary = container.querySelector('[data-glitch-secondary]');
     expect(glitchElement).not.toBeNull();
+    expect(glitchSecondary).not.toBeNull();
   });
 });

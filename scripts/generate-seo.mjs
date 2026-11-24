@@ -21,6 +21,13 @@ export function escapeXml(str = '') {
 }
 
 /**
+ * Serializa JSON-LD escapando '<' para prevenir breakout de </script> (XSS)
+ */
+export function serializeJsonLd(data) {
+  return JSON.stringify(data, null, 2).replace(/</g, '\\u003c');
+}
+
+/**
  * Escapa aspas para atributos HTML
  */
 export function escapeAttr(str = '') {
@@ -227,7 +234,7 @@ ${tagMetas}
 
     <!-- JSON-LD Estruturado Schema.org -->
     <script type="application/ld+json">
-${JSON.stringify(jsonLd, null, 2)}
+${serializeJsonLd(jsonLd)}
     </script>
 `;
 
@@ -292,7 +299,7 @@ export function injectHomeMeta(htmlTemplate, siteUrl = SITE_URL, config = SEO_CO
 
     <!-- JSON-LD Estruturado Schema.org -->
     <script type="application/ld+json">
-${JSON.stringify(jsonLd, null, 2)}
+${serializeJsonLd(jsonLd)}
     </script>
 `;
 

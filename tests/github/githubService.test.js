@@ -21,7 +21,7 @@ describe('GitHub Service & Cache', () => {
     ];
 
     localStorage.setItem(
-      'portfolio_repositories_v6',
+      'portfolio_repositories_v7',
       JSON.stringify({
         timestamp: Date.now(),
         data: fakeData,

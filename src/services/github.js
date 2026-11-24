@@ -1,6 +1,6 @@
 import { profileData } from '../data/profile.js';
 
-const CACHE_KEY = 'portfolio_repositories_v6';
+const CACHE_KEY = 'portfolio_repositories_v7';
 const CACHE_TTL_MS = 1000 * 60 * 60 * 24; // 24 horas de cache persistente
 
 /**
@@ -68,6 +68,7 @@ export async function fetchRepositories(forceRefresh = false) {
   const fallbackUrl = `https://api.github.com/users/${githubUsername}/repos?sort=updated&per_page=100`;
 
   let repos = null;
+  let usedPrimaryApi = false;
 
   try {
     const res = await fetch(primaryUrl, {
@@ -75,6 +76,7 @@ export async function fetchRepositories(forceRefresh = false) {
     });
     if (res.ok) {
       repos = await res.json();
+      usedPrimaryApi = Array.isArray(repos) && repos.length > 0;
     }
   } catch (primaryErr) {
     console.warn('Endpoint /api/github indisponível, usando fallback público:', primaryErr);
@@ -116,16 +118,19 @@ export async function fetchRepositories(forceRefresh = false) {
       }));
 
     if (filtered.length > 0) {
-      try {
-        localStorage.setItem(
-          CACHE_KEY,
-          JSON.stringify({
-            timestamp: Date.now(),
-            data: filtered,
-          })
-        );
-      } catch (err) {
-        console.warn('Erro ao salvar no localStorage:', err);
+      // Só persiste no cache de 24h quando veio da API principal (/api/github com previews reais)
+      if (usedPrimaryApi) {
+        try {
+          localStorage.setItem(
+            CACHE_KEY,
+            JSON.stringify({
+              timestamp: Date.now(),
+              data: filtered,
+            })
+          );
+        } catch (err) {
+          console.warn('Erro ao salvar no localStorage:', err);
+        }
       }
       return filtered;
     }

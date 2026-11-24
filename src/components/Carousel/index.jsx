@@ -46,11 +46,15 @@ export default function Carousel() {
       setRepositories(data);
 
       const savedIndex = localStorage.getItem('requestIndex');
-      if (savedIndex !== null) {
+      if (savedIndex !== null && data.length > 0) {
         const parsed = Number(savedIndex);
         if (!isNaN(parsed) && parsed >= 0 && parsed < data.length) {
           setRequestIndex(parsed);
+        } else {
+          setRequestIndex(0);
         }
+      } else if (data.length > 0) {
+        setRequestIndex((prev) => (prev >= 0 && prev < data.length ? prev : 0));
       }
     } catch (err) {
       if (repositories.length === 0) {
@@ -89,10 +93,12 @@ export default function Carousel() {
       requestIndex + 2,
     ];
 
+    // Pré-carrega apenas banners personalizados (evita disparar 429 no opengraph.githubassets.com)
     const urlsToPreload = indicesToPreload
       .filter((idx) => idx >= 0 && idx < repositories.length)
-      .map((idx) => repositories[idx]?.openGraphImageUrl)
-      .filter(Boolean);
+      .map((idx) => repositories[idx])
+      .filter((repo) => repo?.usesCustomOpenGraphImage && repo?.openGraphImageUrl)
+      .map((repo) => repo.openGraphImageUrl);
 
     preloadImages(urlsToPreload);
   }, [requestIndex, repositories]);

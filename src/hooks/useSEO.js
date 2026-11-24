@@ -2,28 +2,31 @@ import { useEffect } from 'react';
 import { SEO_CONFIG, SITE_URL } from '../config/seo.js';
 
 /**
- * Atualiza ou cria uma tag meta no document.head
+ * Atualiza ou cria uma tag meta no document.head e devolve função de restauração
  */
-function setMetaTag(selector, attrName, attrValue, content) {
-  let element = document.head.querySelector(selector);
-  if (!element) {
-    element = document.createElement('meta');
-    element.setAttribute(attrName, attrValue);
-    document.head.appendChild(element);
+function upsertMetaTag(selector, attrName, attrValue, content) {
+  const existing = document.head.querySelector(selector);
+  if (existing) {
+    const prevContent = existing.getAttribute('content');
+    existing.setAttribute('content', content || '');
+    return () => {
+      if (prevContent === null) {
+        existing.removeAttribute('content');
+      } else {
+        existing.setAttribute('content', prevContent);
+      }
+    };
   }
-  element.setAttribute('content', content || '');
+
+  const created = document.createElement('meta');
+  created.setAttribute(attrName, attrValue);
+  created.setAttribute('content', content || '');
+  document.head.appendChild(created);
+  return () => created.remove();
 }
 
 /**
- * Hook para atualização dinâmica de SEO no navegador (SPA)
- * @param {Object} options
- * @param {string} [options.title] - Título da página
- * @param {string} [options.description] - Resumo / descrição
- * @param {string} [options.image] - URL da imagem de capa
- * @param {string} [options.url] - URL canônica relativa ou absoluta
- * @param {string} [options.type] - Tipo OG (website ou article)
- * @param {string} [options.publishedTime] - Data de publicação ISO
- * @param {Array<string>} [options.tags] - Palavras-chave / tags
+ * Hook para atualização dinâmica de SEO no navegador (SPA) com restauração completa ao desmontar
  */
 export function useSEO({
   title,
@@ -32,10 +35,14 @@ export function useSEO({
   url,
   type = 'article',
   publishedTime,
-  tags = [],
+  tags,
 } = {}) {
+  const tagsKey = Array.isArray(tags) ? tags.join(', ') : '';
+
   useEffect(() => {
     const originalTitle = document.title;
+    const restorers = [];
+
     const finalTitle = title
       ? SEO_CONFIG.titleTemplate.replace('%s', title)
       : SEO_CONFIG.defaultTitle;
@@ -53,35 +60,48 @@ export function useSEO({
     document.title = finalTitle;
 
     // 2. Standard Meta
-    setMetaTag('meta[name="description"]', 'name', 'description', finalDescription);
-    if (tags.length > 0) {
-      setMetaTag('meta[name="keywords"]', 'name', 'keywords', tags.join(', '));
+    restorers.push(upsertMetaTag('meta[name="description"]', 'name', 'description', finalDescription));
+    if (tagsKey) {
+      restorers.push(upsertMetaTag('meta[name="keywords"]', 'name', 'keywords', tagsKey));
     }
 
     // 3. Open Graph
-    setMetaTag('meta[property="og:title"]', 'property', 'og:title', finalTitle);
-    setMetaTag('meta[property="og:description"]', 'property', 'og:description', finalDescription);
-    setMetaTag('meta[property="og:url"]', 'property', 'og:url', fullUrl);
-    setMetaTag('meta[property="og:image"]', 'property', 'og:image', fullImage);
-    setMetaTag('meta[property="og:type"]', 'property', 'og:type', type);
+    restorers.push(upsertMetaTag('meta[property="og:title"]', 'property', 'og:title', finalTitle));
+    restorers.push(upsertMetaTag('meta[property="og:description"]', 'property', 'og:description', finalDescription));
+    restorers.push(upsertMetaTag('meta[property="og:url"]', 'property', 'og:url', fullUrl));
+    restorers.push(upsertMetaTag('meta[property="og:image"]', 'property', 'og:image', fullImage));
+    restorers.push(upsertMetaTag('meta[property="og:type"]', 'property', 'og:type', type));
 
     // 4. Twitter
-    setMetaTag('meta[name="twitter:title"]', 'name', 'twitter:title', finalTitle);
-    setMetaTag('meta[name="twitter:description"]', 'name', 'twitter:description', finalDescription);
-    setMetaTag('meta[name="twitter:image"]', 'name', 'twitter:image', fullImage);
+    restorers.push(upsertMetaTag('meta[name="twitter:title"]', 'name', 'twitter:title', finalTitle));
+    restorers.push(upsertMetaTag('meta[name="twitter:description"]', 'name', 'twitter:description', finalDescription));
+    restorers.push(upsertMetaTag('meta[name="twitter:image"]', 'name', 'twitter:image', fullImage));
 
     // 5. Canonical Link
-    let canonical = document.head.querySelector('link[rel="canonical"]');
-    if (!canonical) {
-      canonical = document.createElement('link');
-      canonical.setAttribute('rel', 'canonical');
-      document.head.appendChild(canonical);
+    const existingCanonical = document.head.querySelector('link[rel="canonical"]');
+    if (existingCanonical) {
+      const prevHref = existingCanonical.getAttribute('href');
+      existingCanonical.setAttribute('href', fullUrl);
+      restorers.push(() => {
+        if (prevHref === null) {
+          existingCanonical.removeAttribute('href');
+        } else {
+          existingCanonical.setAttribute('href', prevHref);
+        }
+      });
+    } else {
+      const createdCanonical = document.createElement('link');
+      createdCanonical.setAttribute('rel', 'canonical');
+      createdCanonical.setAttribute('href', fullUrl);
+      document.head.appendChild(createdCanonical);
+      restorers.push(() => createdCanonical.remove());
     }
-    canonical.setAttribute('href', fullUrl);
 
     return () => {
-      // Restaura o título padrão ao desmontar
-      document.title = originalTitle;
+      document.title = originalTitle || SEO_CONFIG.defaultTitle;
+      for (const restore of restorers) {
+        restore();
+      }
     };
-  }, [title, description, image, url, type, publishedTime, tags]);
+  }, [title, description, image, url, type, publishedTime, tagsKey]);
 }

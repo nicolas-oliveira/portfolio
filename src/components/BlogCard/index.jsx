@@ -2,12 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
   CardLink,
+  CardSurface,
   BannerContainer,
   ContentContainer,
   RepeatedContainerGlitch,
+  GlitchSecondaryLayer,
 } from './styles';
 
-export default function BlogCard({ article, time = '4.1s' }) {
+export default function BlogCard({ article, time = '0.7s' }) {
   if (!article) return null;
 
   const { id, title, excerpt, coverImage, readTime, tags } = article;
@@ -37,12 +39,16 @@ export default function BlogCard({ article, time = '4.1s' }) {
   );
 
   return (
-    <CardLink to={`/post/${id}`} data-testid="blog-card">
-      {cardContent}
+    <CardLink to={`/post/${id}`} data-testid="blog-card" $time={time}>
+      <GlitchSecondaryLayer aria-hidden="true" data-glitch-secondary="true" $time={time}>
+        {cardContent}
+      </GlitchSecondaryLayer>
 
-      <RepeatedContainerGlitch aria-hidden="true" data-glitch="true" time={time}>
+      <RepeatedContainerGlitch aria-hidden="true" data-glitch="true" $time={time}>
         {cardContent}
       </RepeatedContainerGlitch>
+
+      <CardSurface $time={time}>{cardContent}</CardSurface>
     </CardLink>
   );
 }

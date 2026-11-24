@@ -11,6 +11,7 @@ export async function getGitHubRepositories(token) {
   }
 
   // 1. Se houver token, usa GraphQL para obter o openGraphImageUrl oficial com precisão
+  let authRejected = false;
   if (token) {
     try {
       const graphqlQuery = {
@@ -66,16 +67,23 @@ export async function getGitHubRepositories(token) {
             usesCustomOpenGraphImage: Boolean(node.usesCustomOpenGraphImage),
           }));
         }
+      } else if (gqlRes.status === 401 || gqlRes.status === 403) {
+        authRejected = true;
       }
     } catch (gqlErr) {
       console.warn('Falha na consulta GraphQL do GitHub, tentando REST:', gqlErr);
     }
   }
 
-  // 2. Fallback via API REST
+  // 2. Fallback via API REST (remove Authorization somente se GraphQL rejeitou o token com 401/403)
+  const restHeaders = { ...headers };
+  if (authRejected) {
+    delete restHeaders.Authorization;
+  }
+
   const restRes = await fetch(
     `https://api.github.com/users/${USERNAME}/repos?sort=updated&per_page=100`,
-    { headers }
+    { headers: restHeaders }
   );
 
   if (!restRes.ok) {
@@ -117,6 +125,6 @@ export default async function handler(req, res) {
     return res.status(200).json(repos);
   } catch (err) {
     console.error('Erro na Vercel Serverless Function /api/github:', err);
-    return res.status(500).json({ error: err.message || 'Falha ao buscar repositórios' });
+    return res.status(500).json({ error: 'Falha ao buscar repositórios' });
   }
 }

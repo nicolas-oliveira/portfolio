@@ -9,7 +9,11 @@
   "scripts": {
     "dev": "vite",
     "start": "vite",
-    "build": "vite build && node scripts/generate-seo.mjs",
+    "security:gitleaks": "node scripts/run-gitleaks.mjs",
+    "security:dist": "node scripts/scan-secrets.mjs",
+    "security:scan": "node scripts/run-gitleaks.mjs && node scripts/scan-secrets.mjs",
+    "prebuild": "node scripts/run-gitleaks.mjs",
+    "build": "vite build && node scripts/generate-seo.mjs && node scripts/scan-secrets.mjs",
     "preview": "vite preview",
     "test": "vitest run",
     "new:post": "node scripts/create-post.mjs",

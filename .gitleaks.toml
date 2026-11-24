@@ -1,0 +1,21 @@
+title = "Portfolio Gitleaks Configuration"
+
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Arquivos de lock sem segredos para evitar falsos positivos de hashes de integridade"
+paths = [
+  '''^yarn\.lock$''',
+  '''^package-lock\.json$''',
+]
+
+[[allowlists]]
+description = "Exemplo didático fictício de JWT no artigo sobre Autenticação"
+condition = "AND"
+paths = [
+  '''^src/content/posts/o-que-e-autenticacao\.md$''',
+]
+regexes = [
+  '''eyJhbGciOiJIUzI1NiIsIn\.eyJzdWIiOiIxMjMiLCJuYW\.SflKxwRJSMeKKF2QT4fwpM''',
+]

@@ -1,6 +1,6 @@
 import React from 'react';
 import { describe, it, expect, beforeEach } from 'vitest';
-import { render } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import fs from 'fs';
 import path from 'path';
 import RepoCard from '../../src/components/RepoCard/index.jsx';
@@ -52,7 +52,7 @@ describe('Componente RepoCard & Previews', () => {
     expect(fallback, 'O fallback não deve ser exibido quando há imagem personalizada').toBeNull();
   });
 
-  it('FRONTEND: se não houver imagem personalizada, o frontend carrega o padrão do github', () => {
+  it('FRONTEND: se não houver imagem personalizada (mesmo com URL padrão 200 do GitHub), exibe a caixa de terminal de fallback', () => {
     const defaultImageUrl =
       'https://opengraph.githubassets.com/9f40df85da455e03c2adc4438283d23187e40003110e05a1319ff834de1031d0/nicolas-oliveira/pesquisas-profundas';
 
@@ -66,15 +66,38 @@ describe('Componente RepoCard & Previews', () => {
       />
     );
 
-    // Deve carregar a tag <img> com o preview padrão do GitHub
-    const img = container.querySelector('img');
-    expect(img, 'A tag <img> com o padrão do GitHub DEVE ser renderizada no front-end').not.toBeNull();
-
-    expect(img?.getAttribute('src')).toBe(defaultImageUrl);
-    expect(img?.getAttribute('data-preview-type')).toBe('default');
+    // Mesmo recebendo a URL padrão do GitHub, deve renderizar a caixa de terminal GITHUB_PREVIEW_SYS
+    expect(container.querySelector('img')).toBeNull();
+    const fallback = container.querySelector('.terminal-header');
+    expect(fallback, 'A caixa de terminal de fallback DEVE ser renderizada').not.toBeNull();
+    expect(container.querySelector('[data-preview-type="fallback"]')).not.toBeNull();
   });
 
-  it('INTEGRAÇÃO REAL: busca repositórios reais do GitHub e valida renderização de imagem personalizada vs padrão', async () => {
+  it('FRONTEND: se a imagem personalizada falhar ao carregar, troca para a caixa de terminal de fallback', () => {
+    const customImageUrl =
+      'https://repository-images.githubusercontent.com/421193882/broken-image';
+
+    const { container } = render(
+      <RepoCard
+        nameOfRepository="repo-com-erro"
+        openGraphImageUrl={customImageUrl}
+        usesCustomOpenGraphImage={true}
+        description="Teste de erro de carregamento"
+        htmlUrl="https://github.com/nicolas-oliveira/repo-com-erro"
+      />
+    );
+
+    const img = container.querySelector('img');
+    expect(img?.getAttribute('src')).toBe(customImageUrl);
+
+    fireEvent.error(img);
+
+    expect(container.querySelector('img')).toBeNull();
+    expect(container.querySelector('.terminal-header')).not.toBeNull();
+    expect(container.querySelector('[data-preview-type="fallback"]')).not.toBeNull();
+  });
+
+  it('INTEGRAÇÃO REAL: busca repositórios reais do GitHub e valida renderização de imagem personalizada vs fallback terminal', async () => {
     const repos = await getGitHubRepositories(token);
     expect(Array.isArray(repos)).toBe(true);
     expect(repos.length).toBeGreaterThan(0);
@@ -100,7 +123,7 @@ describe('Componente RepoCard & Previews', () => {
 
     // 2. Localiza um repositório real sem imagem personalizada (ex: pesquisas-profundas)
     const defaultRepo = repos.find((r) => !r.usesCustomOpenGraphImage);
-    expect(defaultRepo, 'Deve existir ao menos 1 repositório com preview padrão').toBeDefined();
+    expect(defaultRepo, 'Deve existir ao menos 1 repositório sem banner personalizado').toBeDefined();
 
     const { container: defaultContainer } = render(
       <RepoCard
@@ -112,8 +135,11 @@ describe('Componente RepoCard & Previews', () => {
       />
     );
 
-    const defaultImg = defaultContainer.querySelector('img');
-    expect(defaultImg, `O front-end deve carregar a imagem padrão do repo ${defaultRepo.name}`).not.toBeNull();
-    expect(defaultImg?.getAttribute('data-preview-type')).toBe('default');
+    expect(defaultContainer.querySelector('img')).toBeNull();
+    expect(
+      defaultContainer.querySelector('.terminal-header'),
+      `O front-end deve exibir a caixa de terminal de fallback no repo ${defaultRepo.name}`
+    ).not.toBeNull();
+    expect(defaultContainer.querySelector('[data-preview-type="fallback"]')).not.toBeNull();
   });
 });

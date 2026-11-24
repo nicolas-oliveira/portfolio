@@ -27,9 +27,11 @@ export function parseFrontmatter(rawContent) {
       const key = trimmed.slice(0, colonIdx).trim();
       let val = trimmed.slice(colonIdx + 1).trim();
 
-      // Trata aspas
-      if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) {
-        val = val.slice(1, -1);
+      // Trata aspas e faz unescape de aspas internas (\" ou \')
+      if (val.startsWith('"') && val.endsWith('"')) {
+        val = val.slice(1, -1).replace(/\\"/g, '"').replace(/\\\\/g, '\\');
+      } else if (val.startsWith("'") && val.endsWith("'")) {
+        val = val.slice(1, -1).replace(/\\'/g, "'");
       } else if (val.startsWith('[') && val.endsWith(']')) {
         // Trata arrays inline: [Tag1, Tag2]
         val = val
@@ -191,12 +193,7 @@ export const localMarkdownAdapter = {
 
     const article = articles.find((a) => a.id === id);
     if (!article) {
-      // Se não achar nos locais, tenta o mockAdapter como fallback de segurança
-      try {
-        return await mockBlogAdapter.getArticleById(id);
-      } catch {
-        throw new Error(`Artigo com id "${id}" não encontrado.`);
-      }
+      throw new Error(`Artigo com id "${id}" não encontrado.`);
     }
 
     return article;
