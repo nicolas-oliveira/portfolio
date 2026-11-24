@@ -185,6 +185,111 @@ describe('Secret Scanner Pós-Build (scripts/scan-secrets.mjs)', () => {
   }, 15000);
 });
 
+describe('Regressão Vercel Env Vars (VITE_VERCEL_GIT_COMMIT_AUTHOR_NAME / _LOGIN)', () => {
+  const vercelAuthorEnv = {
+    VITE_VERCEL_GIT_COMMIT_AUTHOR_NAME: 'Nicolas Oliveira',
+    VITE_VERCEL_GIT_COMMIT_AUTHOR_LOGIN: 'nicolas-oliveira',
+    VERCEL_GIT_COMMIT_AUTHOR_NAME: 'Nicolas Oliveira',
+    VERCEL_GIT_COMMIT_AUTHOR_LOGIN: 'nicolas-oliveira',
+  };
+
+  let tempDir;
+
+  beforeEach(() => {
+    tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'portfolio-vercel-reg-'));
+  });
+
+  afterEach(() => {
+    fs.rmSync(tempDir, { recursive: true, force: true });
+  });
+
+  it('vite.config.js deve permitir as variáveis de autor da Vercel e continuar bloqueando apenas segredos reais no mesmo ambiente', () => {
+    const fakeSecret = buildSyntheticGithubPat();
+    const res = spawnSync(
+      process.execPath,
+      [
+        '--input-type=module',
+        '-e',
+        `import configFn from './vite.config.js';
+         try {
+           configFn({ mode: 'production' });
+           process.exit(0);
+         } catch (err) {
+           console.error(err.message);
+           process.exit(1);
+         }`,
+      ],
+      {
+        cwd: process.cwd(),
+        env: {
+          ...process.env,
+          ...vercelAuthorEnv,
+          VITE_API_AUTH: fakeSecret,
+        },
+        stdio: 'pipe',
+        encoding: 'utf8',
+      }
+    );
+
+    expect(res.status).toBe(1);
+    expect(res.stderr).toContain('VITE_API_AUTH');
+    expect(res.stderr).not.toContain('VITE_VERCEL_GIT_COMMIT_AUTHOR_NAME');
+    expect(res.stderr).not.toContain('VITE_VERCEL_GIT_COMMIT_AUTHOR_LOGIN');
+    expect(res.stderr).not.toContain(fakeSecret);
+  }, 15000);
+
+  it('scan-secrets.mjs não deve gerar falso positivo mesmo quando "Nicolas Oliveira" e "nicolas-oliveira" aparecem no dist/ junto das vars da Vercel', () => {
+    const distDir = path.join(tempDir, 'dist');
+    fs.mkdirSync(distDir, { recursive: true });
+    fs.writeFileSync(
+      path.join(distDir, 'index.html'),
+      '<title>Nicolas Oliveira</title><a href="https://github.com/nicolas-oliveira">GitHub</a>',
+      'utf8'
+    );
+
+    const collected = collectEnvSecrets(tempDir, {
+      ...vercelAuthorEnv,
+      GITHUB_TOKEN: 'real_backend_token_for_regression_check',
+    });
+    expect(collected.map((s) => s.name)).toEqual(['GITHUB_TOKEN']);
+
+    const cleanResult = scanDistDirectory({
+      rootDir: tempDir,
+      distDir,
+      envObj: {
+        ...vercelAuthorEnv,
+        GITHUB_TOKEN: 'real_backend_token_for_regression_check',
+      },
+    });
+    expect(cleanResult.passed).toBe(true);
+    expect(cleanResult.findings).toHaveLength(0);
+  });
+
+  it('scan-secrets.mjs deve continuar bloqueando vazamento real de GITHUB_TOKEN no dist/ mesmo com as vars da Vercel presentes', () => {
+    const leakedToken = 'backend_token_leaked_under_vercel_env_999';
+    const distDir = path.join(tempDir, 'dist');
+    fs.mkdirSync(distDir, { recursive: true });
+    fs.writeFileSync(
+      path.join(distDir, 'bundle.js'),
+      `const author="Nicolas Oliveira"; const user="nicolas-oliveira"; const bad="${leakedToken}";`,
+      'utf8'
+    );
+
+    const result = scanDistDirectory({
+      rootDir: tempDir,
+      distDir,
+      envObj: {
+        ...vercelAuthorEnv,
+        GITHUB_TOKEN: leakedToken,
+      },
+    });
+
+    expect(result.passed).toBe(false);
+    expect(result.findings.map((f) => f.ruleId)).toEqual(['env-leak:GITHUB_TOKEN']);
+    expect(formatDistFindings(result.findings)).not.toContain(leakedToken);
+  });
+});
+
 describe('Auditoria Gitleaks Pré-Build (scripts/run-gitleaks.mjs)', () => {
   let tempRepo;
 
